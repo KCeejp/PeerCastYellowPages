@@ -17,6 +17,7 @@
 
 #import "YPGeneralPreferencesViewController.h"
 #import "YPYellowPagesPreferencesViewController.h"
+#import "YPPlayerPreferencesViewController.h"
 
 @interface YPAppDelegate () <NSUserNotificationCenterDelegate>
 
@@ -60,10 +61,12 @@
     
     YPGeneralPreferencesViewController *generalViewController = [[YPGeneralPreferencesViewController alloc] init];
     YPYellowPagesPreferencesViewController *yellowPagesViewController = [[YPYellowPagesPreferencesViewController alloc] init];
+    YPPlayerPreferencesViewController *playerViewController = [[YPPlayerPreferencesViewController alloc] init];
     
     self.preferencesWindowController = [[MASPreferencesWindowController alloc] initWithViewControllers:@[
                                                                                                          generalViewController,
                                                                                                          yellowPagesViewController,
+                                                                                                         playerViewController,
                                                                                                          ]];
     self.channelArrayController.managedObjectContext = [NSManagedObjectContext MR_defaultContext];
 }
