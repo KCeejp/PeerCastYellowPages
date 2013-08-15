@@ -30,6 +30,12 @@
 		D6720ECB17BBE02500BC2677 /* YPFavorite.m in Sources */ = {isa = PBXBuildFile; fileRef = D6720EC417BBE02500BC2677 /* YPFavorite.m */; };
 		D6720ECC17BBE02500BC2677 /* YPYellowPage.m in Sources */ = {isa = PBXBuildFile; fileRef = D6720EC617BBE02500BC2677 /* YPYellowPage.m */; };
 		D6720ED117BBE58A00BC2677 /* YPChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = D6720ED017BBE58A00BC2677 /* YPChannel.m */; };
+		D6720ED417BCC92000BC2677 /* YPChannelUpdator.m in Sources */ = {isa = PBXBuildFile; fileRef = D6720ED317BCC92000BC2677 /* YPChannelUpdator.m */; };
+		D6720EDE17BCE9CD00BC2677 /* YPGeneralPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6720EDC17BCE9CD00BC2677 /* YPGeneralPreferencesViewController.m */; };
+		D6720EDF17BCE9CD00BC2677 /* YPGeneralPreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6720EDD17BCE9CD00BC2677 /* YPGeneralPreferencesViewController.xib */; };
+		D6720EE817BCEB6500BC2677 /* YPYellowPagesPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6720EE617BCEB6500BC2677 /* YPYellowPagesPreferencesViewController.m */; };
+		D6720EE917BCEB6500BC2677 /* YPYellowPagesPreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6720EE717BCEB6500BC2677 /* YPYellowPagesPreferencesViewController.xib */; };
+		D6720EEC17BD024300BC2677 /* YPSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = D6720EEB17BD024300BC2677 /* YPSettings.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +92,16 @@
 		D6720EC617BBE02500BC2677 /* YPYellowPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPYellowPage.m; sourceTree = "<group>"; };
 		D6720ECF17BBE58A00BC2677 /* YPChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPChannel.h; sourceTree = "<group>"; };
 		D6720ED017BBE58A00BC2677 /* YPChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPChannel.m; sourceTree = "<group>"; };
+		D6720ED217BCC92000BC2677 /* YPChannelUpdator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPChannelUpdator.h; sourceTree = "<group>"; };
+		D6720ED317BCC92000BC2677 /* YPChannelUpdator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPChannelUpdator.m; sourceTree = "<group>"; };
+		D6720EDB17BCE9CD00BC2677 /* YPGeneralPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPGeneralPreferencesViewController.h; sourceTree = "<group>"; };
+		D6720EDC17BCE9CD00BC2677 /* YPGeneralPreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPGeneralPreferencesViewController.m; sourceTree = "<group>"; };
+		D6720EDD17BCE9CD00BC2677 /* YPGeneralPreferencesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YPGeneralPreferencesViewController.xib; sourceTree = "<group>"; };
+		D6720EE517BCEB6500BC2677 /* YPYellowPagesPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPYellowPagesPreferencesViewController.h; sourceTree = "<group>"; };
+		D6720EE617BCEB6500BC2677 /* YPYellowPagesPreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPYellowPagesPreferencesViewController.m; sourceTree = "<group>"; };
+		D6720EE717BCEB6500BC2677 /* YPYellowPagesPreferencesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YPYellowPagesPreferencesViewController.xib; sourceTree = "<group>"; };
+		D6720EEA17BD024300BC2677 /* YPSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPSettings.h; sourceTree = "<group>"; };
+		D6720EEB17BD024300BC2677 /* YPSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPSettings.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,11 +216,15 @@
 		D605591917B963140070C4AD /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D6720ED217BCC92000BC2677 /* YPChannelUpdator.h */,
+				D6720ED317BCC92000BC2677 /* YPChannelUpdator.m */,
 				D6720ECD17BBE03000BC2677 /* CoreDataModels */,
 				D605591017B94F6C0070C4AD /* YPIndexDotTxtRequestOperation.h */,
 				D605591117B94F6C0070C4AD /* YPIndexDotTxtRequestOperation.m */,
 				D605591317B94FB30070C4AD /* YPYellowPagesClient.h */,
 				D605591417B94FB30070C4AD /* YPYellowPagesClient.m */,
+				D6720EEA17BD024300BC2677 /* YPSettings.h */,
+				D6720EEB17BD024300BC2677 /* YPSettings.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -243,8 +263,22 @@
 			children = (
 				D6720EA817BA956700BC2677 /* YPChannelCellView.h */,
 				D6720EA917BA956700BC2677 /* YPChannelCellView.m */,
+				D6720ED817BCDF0700BC2677 /* Preferences */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		D6720ED817BCDF0700BC2677 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				D6720EDB17BCE9CD00BC2677 /* YPGeneralPreferencesViewController.h */,
+				D6720EDC17BCE9CD00BC2677 /* YPGeneralPreferencesViewController.m */,
+				D6720EDD17BCE9CD00BC2677 /* YPGeneralPreferencesViewController.xib */,
+				D6720EE517BCEB6500BC2677 /* YPYellowPagesPreferencesViewController.h */,
+				D6720EE617BCEB6500BC2677 /* YPYellowPagesPreferencesViewController.m */,
+				D6720EE717BCEB6500BC2677 /* YPYellowPagesPreferencesViewController.xib */,
+			);
+			name = Preferences;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -330,6 +364,8 @@
 				D60558F517B93D8F0070C4AD /* Images.xcassets in Resources */,
 				D60558ED17B93D8F0070C4AD /* Credits.rtf in Resources */,
 				D60558F317B93D8F0070C4AD /* MainMenu.xib in Resources */,
+				D6720EE917BCEB6500BC2677 /* YPYellowPagesPreferencesViewController.xib in Resources */,
+				D6720EDF17BCE9CD00BC2677 /* YPGeneralPreferencesViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -385,8 +421,12 @@
 				D6720EC917BBE02500BC2677 /* _YPYellowPage.m in Sources */,
 				D6720EC717BBE02500BC2677 /* _YPChannel.m in Sources */,
 				D6720ECB17BBE02500BC2677 /* YPFavorite.m in Sources */,
+				D6720EE817BCEB6500BC2677 /* YPYellowPagesPreferencesViewController.m in Sources */,
 				D6720ED117BBE58A00BC2677 /* YPChannel.m in Sources */,
 				D6720ECC17BBE02500BC2677 /* YPYellowPage.m in Sources */,
+				D6720EDE17BCE9CD00BC2677 /* YPGeneralPreferencesViewController.m in Sources */,
+				D6720ED417BCC92000BC2677 /* YPChannelUpdator.m in Sources */,
+				D6720EEC17BD024300BC2677 /* YPSettings.m in Sources */,
 				D605591217B94F6C0070C4AD /* YPIndexDotTxtRequestOperation.m in Sources */,
 				D6720EC817BBE02500BC2677 /* _YPFavorite.m in Sources */,
 				D6720EBA17BBDD5700BC2677 /* Model.xcdatamodeld in Sources */,

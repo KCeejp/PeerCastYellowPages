@@ -7,6 +7,7 @@
 //
 
 #import "AFHTTPClient.h"
+#import "YPIndexDotTxtRequestOperation.h"
 
 @interface YPYellowPagesClient : AFHTTPClient
 

@@ -60,6 +60,20 @@ with or without modification, are permitted provided that the following conditio
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+## MASPreferences
+
+# MASPreferences
+
+This component is intended as a replacement for SS_PrefsController by Matt Legend Gemmell and Selectable Toolbar by Brandon Walkin. It is designed to use NSViewController subclasses for preference panes.
+
+# How to use
+
+You can find a Demo project at [MASPreferencesDemo](https://github.com/shpakovski/MASPreferencesDemo).
+
+# License
+
+MASPreferences is licensed under the BSD license
+
 ## MagicalRecord
 
  Copyright (c) 2010, Magical Panda Software, LLC

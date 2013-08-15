@@ -24,6 +24,12 @@
 #define COCOAPODS_VERSION_MINOR_CocoaLumberjack 6
 #define COCOAPODS_VERSION_PATCH_CocoaLumberjack 2
 
+// MASPreferences
+#define COCOAPODS_POD_AVAILABLE_MASPreferences
+#define COCOAPODS_VERSION_MAJOR_MASPreferences 1
+#define COCOAPODS_VERSION_MINOR_MASPreferences 0
+#define COCOAPODS_VERSION_PATCH_MASPreferences 0
+
 // MagicalRecord
 #define COCOAPODS_POD_AVAILABLE_MagicalRecord
 #define COCOAPODS_VERSION_MAJOR_MagicalRecord 2

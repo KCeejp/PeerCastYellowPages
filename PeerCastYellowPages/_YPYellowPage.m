@@ -4,7 +4,7 @@
 #import "_YPYellowPage.h"
 
 const struct YPYellowPageAttributes YPYellowPageAttributes = {
-	.indexDotTxtURL = @"indexDotTxtURL",
+	.indexDotTxtURLString = @"indexDotTxtURLString",
 	.name = @"name",
 };
 
@@ -47,7 +47,7 @@ const struct YPYellowPageFetchedProperties YPYellowPageFetchedProperties = {
 
 
 
-@dynamic indexDotTxtURL;
+@dynamic indexDotTxtURLString;
 
 
 

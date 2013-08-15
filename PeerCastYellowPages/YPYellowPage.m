@@ -12,4 +12,14 @@
 
 // Custom logic goes here.
 
+- (void)setIndexDotTxtURL:(NSURL *)indexDotTxtURL
+{
+    self.indexDotTxtURLString = [indexDotTxtURL absoluteString];
+}
+
+- (NSURL *)indexDotTxtURL
+{
+    return [NSURL URLWithString:self.indexDotTxtURLString];
+}
+
 @end

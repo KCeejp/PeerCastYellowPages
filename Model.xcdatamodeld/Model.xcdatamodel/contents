@@ -21,7 +21,7 @@
         <attribute name="keyword" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="YellowPage" representedClassName="YPYellowPage" syncable="YES">
-        <attribute name="indexDotTxtURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="indexDotTxtURLString" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>

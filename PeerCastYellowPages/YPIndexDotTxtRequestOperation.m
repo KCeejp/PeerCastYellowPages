@@ -22,30 +22,25 @@
 
 - (NSArray *)responseChannels
 {
+    NSLog(@"Begin: %lu", (unsigned long)[YPChannel MR_countOfEntities]);
+    
     NSMutableArray *lines = @[].mutableCopy;
     [self.responseString enumerateLinesUsingBlock:^(NSString *line, BOOL *stop) {
         [lines addObject:line];
     }];
     
-    NSArray *identifiers = [lines map:^id(id obj) {
-        return [(NSString *)obj componentsSeparatedByString:@"<>"][1];
-    }];
-    
-    // [YPChannel MR_truncateAll];
-    NSPredicate *predicate = [NSCompoundPredicate notPredicateWithSubpredicate:[NSPredicate predicateWithFormat:@"(identifier IN %@)", identifiers]];
-    [YPChannel MR_deleteAllMatchingPredicate:predicate];
-    
     NSMutableArray *responseChannels = @[].mutableCopy;
     for (NSString *string in lines) {
         NSArray *elements = [string componentsSeparatedByString:@"<>"];
         
-        YPChannel *channel = [YPChannel MR_findFirstByAttribute:@"identifier" withValue:[string componentsSeparatedByString:@"<>"][1]];
-        if (!channel) {
-            channel = [YPChannel MR_createEntity];
-            channel.newValue = YES;
+        NSString *identifier = elements[1];
+        YPChannel *channel = [YPChannel MR_findFirstByAttribute:@"identifier" withValue:identifier];
+        if (channel) {
+            channel.newValue = NO;
         }
         else {
-            channel.newValue = NO;
+            channel = [YPChannel MR_createEntity];
+            channel.newValue = YES;
         }
         
         channel.yellowPageURLString = [self.request.URL absoluteString];
@@ -72,7 +67,8 @@
         
         [responseChannels addObject:channel];
     }
-    [MagicalRecord saveUsingCurrentThreadContextWithBlockAndWait:nil];
+    NSManagedObjectContext *mainContext  = [NSManagedObjectContext MR_defaultContext];
+    [mainContext MR_saveToPersistentStoreAndWait];
     
     return responseChannels;
 }

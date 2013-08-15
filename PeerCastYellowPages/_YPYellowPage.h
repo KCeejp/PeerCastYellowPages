@@ -5,7 +5,7 @@
 
 
 extern const struct YPYellowPageAttributes {
-	__unsafe_unretained NSString *indexDotTxtURL;
+	__unsafe_unretained NSString *indexDotTxtURLString;
 	__unsafe_unretained NSString *name;
 } YPYellowPageAttributes;
 
@@ -32,11 +32,11 @@ extern const struct YPYellowPageFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSString* indexDotTxtURL;
+@property (nonatomic, strong) NSString* indexDotTxtURLString;
 
 
 
-//- (BOOL)validateIndexDotTxtURL:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateIndexDotTxtURLString:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -62,8 +62,8 @@ extern const struct YPYellowPageFetchedProperties {
 @interface _YPYellowPage (CoreDataGeneratedPrimitiveAccessors)
 
 
-- (NSString*)primitiveIndexDotTxtURL;
-- (void)setPrimitiveIndexDotTxtURL:(NSString*)value;
+- (NSString*)primitiveIndexDotTxtURLString;
+- (void)setPrimitiveIndexDotTxtURLString:(NSString*)value;
 
 
 

@@ -8,9 +8,15 @@
 
 #import "YPAppDelegate.h"
 
-#import "YPYellowPagesClient.h"
-#import "YPIndexDotTxtRequestOperation.h"
+#import "YPChannelUpdator.h"
+#import "YPYellowPage.h"
+
+// Views
 #import "YPChannelCellView.h"
+#import "MASPreferencesWindowController.h"
+
+#import "YPGeneralPreferencesViewController.h"
+#import "YPYellowPagesPreferencesViewController.h"
 
 @interface YPAppDelegate () <NSUserNotificationCenterDelegate>
 
@@ -19,18 +25,23 @@
 @property (nonatomic) NSArray *channels;
 @property (nonatomic) NSArray *menuArray;
 
+@property (nonatomic) MASPreferencesWindowController *preferencesWindowController;
+
 @end
 
 @implementation YPAppDelegate
 
+- (void)applicationWillTerminate:(NSNotification *)notification
+{
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
+    [MagicalRecord setupCoreDataStack];
     
-    [self fetchYellowPages:nil];
-    
-    NSTimeInterval interval = 2 * 60;
-    [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(fetchYellowPages:) userInfo:nil repeats:YES];
+    // [self initializeYellowPages];
     
     self.menuArray = @[
                        @{@"imageName": @"53-house", @"name": @"Home"},
@@ -41,7 +52,20 @@
     
     [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
     
-    [MagicalRecord setupCoreDataStack];
+    
+    [self fetchYellowPages:nil];
+    
+    NSTimeInterval interval = 2 * 60;
+    [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(fetchYellowPages:) userInfo:nil repeats:YES];
+    
+    YPGeneralPreferencesViewController *generalViewController = [[YPGeneralPreferencesViewController alloc] init];
+    YPYellowPagesPreferencesViewController *yellowPagesViewController = [[YPYellowPagesPreferencesViewController alloc] init];
+    
+    self.preferencesWindowController = [[MASPreferencesWindowController alloc] initWithViewControllers:@[
+                                                                                                         generalViewController,
+                                                                                                         yellowPagesViewController,
+                                                                                                         ]];
+    self.channelArrayController.managedObjectContext = [NSManagedObjectContext MR_defaultContext];
 }
 
 - (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification
@@ -52,45 +76,9 @@
 - (void)fetchYellowPages:(id)sender
 {
     __weak __block __typeof__(self) weakSelf = self;
-    
-    NSArray *URLs = @[
-                      [NSURL URLWithString:@"http://bayonet.ddo.jp/sp/index.txt"],
-                      [NSURL URLWithString:@"http://temp.orz.hm/yp/index.txt"],
-                      ];
-    
-    NSMutableArray *operations = @[].mutableCopy;
-    for (NSURL *URL in URLs) {
-        YPYellowPagesClient *client = [[YPYellowPagesClient alloc] initWithBaseURL:URL];
-        [client registerHTTPOperationClass:[YPIndexDotTxtRequestOperation class]];
-        NSURLRequest *request = [client requestWithMethod:@"GET" path:URL.path parameters:nil];
-        AFHTTPRequestOperation *operation = [client HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        }];
-        [operations addObject:operation];
-    }
-    
-    YPYellowPagesClient *sharedClient = [[YPYellowPagesClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://example.com"]];
-    [sharedClient registerHTTPOperationClass:[YPIndexDotTxtRequestOperation class]];
-    [sharedClient enqueueBatchOfHTTPRequestOperations:operations progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
-    } completionBlock:^(NSArray *operations) {
-        
-        NSMutableArray *channels = @[].mutableCopy;
-        for (AFHTTPRequestOperation *operation in operations) {
-            
-            YPIndexDotTxtRequestOperation *indexDotTxtOperation = (YPIndexDotTxtRequestOperation *)operation;
-            for (YPChannel *channel in indexDotTxtOperation.responseChannels) {
-                [channels addObject:channel];
-            }
-            
-        }
-        
-        [channels sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-            return [(YPChannel *)obj1 viewerCountValue] < [(YPChannel *)obj2 viewerCountValue];
-        }];
-        
+    [[YPChannelUpdator sharedUpdator] fetchWithCompletion:^(NSArray *channels) {
         weakSelf.channels = channels;
         [weakSelf.tableView reloadData];
-        // [weakSelf searchAndNotify];
     }];
 }
 
@@ -107,7 +95,7 @@
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
     if (aTableView == self.tableView) {
-        return self.channels.count;
+        return [(NSArray *)self.channelArrayController.arrangedObjects count];
     }
     else {
         return self.menuArray.count;
@@ -161,6 +149,36 @@
     [channel play];
     
     return NO;
+}
+
+- (void)initializeYellowPages
+{
+    NSArray *URLs = @[
+                      @{@"name":@"SP", @"url":[NSURL URLWithString:@"http://bayonet.ddo.jp/sp/index.txt"]},
+                      @{@"name":@"TP", @"url":[NSURL URLWithString:@"http://temp.orz.hm/yp/index.txt"]},
+                      @{@"name":@"DP", @"url":[NSURL URLWithString:@"http://dp.prgrssv.net/index.txt"]},
+                      @{@"name":@"HKTV", @"url":[NSURL URLWithString:@"http://games.himitsukichi.com/hktv/index.txt"]},
+                      ];
+    for (NSDictionary *dict in URLs) {
+        YPYellowPage *yellowPage = [YPYellowPage MR_createEntity];
+        yellowPage.name = dict[@"name"];
+        yellowPage.indexDotTxtURL = dict[@"url"];
+    }
+}
+
+- (IBAction)onPreferencesButtonPressed:(id)sender
+{
+    [self displayPreferences];
+}
+
+- (IBAction)onPreferencesPressed:(id)sender
+{
+    [self displayPreferences];
+}
+
+- (void)displayPreferences
+{
+    [self.preferencesWindowController showWindow:nil];
 }
 
 @end

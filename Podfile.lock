@@ -4,6 +4,7 @@ PODS:
     - libffi
   - CocoaLumberjack (1.6.2)
   - MagicalRecord (2.1)
+  - MASPreferences (1.0)
   - OBMenuBarWindow (1.0.0)
 
 DEPENDENCIES:
@@ -11,6 +12,7 @@ DEPENDENCIES:
   - BlocksKit
   - CocoaLumberjack
   - MagicalRecord
+  - MASPreferences
   - OBMenuBarWindow (~> 1.0.0)
 
 SPEC CHECKSUMS:
@@ -18,6 +20,7 @@ SPEC CHECKSUMS:
   BlocksKit: 7396526b0816734103f6133fbb1a520c8b04e80c
   CocoaLumberjack: d73e1e317ced14ab930797dda6c17156ff17aaa1
   MagicalRecord: 64e7184c240087a45e9588a722eaf05b0ad837f7
+  MASPreferences: b8c112b4b6e6cbd32b8f49d249eb152d1eeb38f8
   OBMenuBarWindow: ca509046488b1ab5967d4e3b1df88250a423631c
 
 COCOAPODS: 0.23.0

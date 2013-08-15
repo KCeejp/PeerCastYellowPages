@@ -1,8 +1,7 @@
 #import "YPChannel.h"
+#import "YPSettings.h"
+#import "YPFavorite.h"
 #import "GTMNSString+HTML.h"
-
-static NSString * const YPPeerCastIPAddress = @"localhost";
-static const int YPPeerCastPort = 7144;
 
 @interface YPChannel ()
 
@@ -22,12 +21,12 @@ static const int YPPeerCastPort = 7144;
 
 - (NSURL *)plsURL
 {
-    return [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:%d/pls/%@?tip=%@", YPPeerCastIPAddress, YPPeerCastPort, self.identifier, self.host]];
+    return [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:%lu/pls/%@?tip=%@", [YPSettings sharedSettings].peerCastHost, (unsigned long)[YPSettings sharedSettings].peerCastPort, self.identifier, self.host]];
 }
 
 - (NSURL *)streamURL
 {
-    return [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:%d/stream/%@.%@", YPPeerCastIPAddress, YPPeerCastPort, self.identifier, [self.format lowercaseString]]];
+    return [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:%lu/stream/%@.%@", [YPSettings sharedSettings].peerCastHost, (unsigned long)[YPSettings sharedSettings].peerCastPort, self.identifier, [self.format lowercaseString]]];
 }
 
 - (NSString *)name
@@ -96,13 +95,23 @@ static const int YPPeerCastPort = 7144;
     notification.soundName = NSUserNotificationDefaultSoundName;
     
     [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+    
+    NSLog(@"%@", self.name);
+    NSLog(@"%@", self.identifier);
 }
 
 - (BOOL)notify
 {
     __block BOOL notify = NO;
     
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"ウェブ" options:0 error:nil];
+    NSArray *favorites = [YPFavorite MR_findAll];
+    
+    NSArray *keywords = [favorites map:^id(id obj) {
+        return [(YPFavorite *)obj keyword];
+    }];
+    
+    NSString *pattern = [keywords componentsJoinedByString:@"|"];
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:nil];
     id block = ^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
         if (result) {
             notify = YES;
@@ -111,7 +120,6 @@ static const int YPPeerCastPort = 7144;
     [regex enumerateMatchesInString:self.name options:0 range:NSMakeRange(0, self.name.length) usingBlock:block];
     [regex enumerateMatchesInString:self.detail options:0 range:NSMakeRange(0, self.detail.length) usingBlock:block];
     
-    NSLog(@"%@", self.name);
     return notify;
 }
 
