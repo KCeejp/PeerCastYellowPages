@@ -150,7 +150,7 @@
 {
     YPChannel *channel = self.channels[rowIndex];
     
-    // [channel openContactURLInBrowser];
+    [channel openContactURLInBrowser];
     [channel play];
     
     return NO;

@@ -72,22 +72,20 @@
 
 - (void)play
 {
+    NSTask *task = [NSTask launchedTaskWithLaunchPath:@"/usr/bin/open" arguments:@[@"-a", @"/Applications/Flip Player.app", [self.plsURL absoluteString]]];
+    [task waitUntilExit];
+    
     NSUserNotification *notification = [[NSUserNotification alloc] init];
     notification.title = @"Now Playing...";
     notification.informativeText = [NSString stringWithFormat:@"%@ %@", self.name, self.detail];
     notification.soundName = nil;
     
     [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
-    
-    NSTask *task = [NSTask launchedTaskWithLaunchPath:@"/usr/bin/open" arguments:@[@"-a", @"/Applications/Flip Player.app", [self.plsURL absoluteString]]];
-    [task launch];
-    [task waitUntilExit];
 }
 
 - (void)openContactURLInBrowser
 {
     NSTask *task = [NSTask launchedTaskWithLaunchPath:@"/usr/bin/open" arguments:@[self.contactURLString]];
-    [task launch];
     [task waitUntilExit];
 }
 
