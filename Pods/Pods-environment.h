@@ -42,3 +42,9 @@
 #define COCOAPODS_VERSION_MINOR_OBMenuBarWindow 0
 #define COCOAPODS_VERSION_PATCH_OBMenuBarWindow 0
 
+// RFOverlayScrollView
+#define COCOAPODS_POD_AVAILABLE_RFOverlayScrollView
+#define COCOAPODS_VERSION_MAJOR_RFOverlayScrollView 0
+#define COCOAPODS_VERSION_MINOR_RFOverlayScrollView 1
+#define COCOAPODS_VERSION_PATCH_RFOverlayScrollView 0
+

@@ -1,4 +1,4 @@
-platform :osx, '10.7'
+platform :osx, '10.8'
 
 # http://docs.cocoapods.org/podfile.html#pod
 
@@ -8,3 +8,4 @@ pod 'OBMenuBarWindow', '~> 1.0.0'
 pod 'MagicalRecord'
 pod 'BlocksKit'
 pod 'MASPreferences'
+pod 'RFOverlayScrollView'
