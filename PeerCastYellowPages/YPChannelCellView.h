@@ -14,5 +14,6 @@
 @property (weak) IBOutlet NSTextField *countLabel;
 @property (weak) IBOutlet NSTextField *detailLabel;
 @property (weak) IBOutlet NSTextField *contactURLLabel;
+@property (weak) IBOutlet NSTextField *yellowPageNameLabel;
 
 @end

@@ -754,14 +754,14 @@
                                 <rect key="frame" x="65" y="0.0" width="255" height="480"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
-                                    <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" scrollerKnobStyle="light" translatesAutoresizingMaskIntoConstraints="NO" id="AgL-W7-TEA">
+                                    <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="90" horizontalPageScroll="10" verticalLineScroll="90" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AgL-W7-TEA">
                                         <rect key="frame" x="0.0" y="0.0" width="255" height="418"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <clipView key="contentView" ambiguous="YES" misplaced="YES" id="90X-GX-sKB">
+                                        <clipView key="contentView" ambiguous="YES" misplaced="YES" copiesOnScroll="NO" id="90X-GX-sKB">
                                             <rect key="frame" x="0.0" y="0.0" width="255" height="418"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="4sF-Z7-oq3">
+                                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="88" rowSizeStyle="automatic" viewBased="YES" id="4sF-Z7-oq3">
                                                     <rect key="frame" x="0.0" y="0.0" width="255" height="418"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
@@ -786,11 +786,20 @@
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NmU-Ep-3H3">
-                                                                            <rect key="frame" x="0.0" y="68" width="255" height="17"/>
+                                                                            <rect key="frame" x="0.0" y="68" width="186" height="17"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="B8w-zt-BU5">
                                                                                 <font key="font" metaFont="systemBold"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                            </textFieldCell>
+                                                                        </textField>
+                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qnI-bL-N9k">
+                                                                            <rect key="frame" x="188" y="68" width="64" height="17"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Label" id="Cq5-gS-4An">
+                                                                                <font key="font" metaFont="system"/>
+                                                                                <color key="textColor" name="keyboardFocusIndicatorColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                             </textFieldCell>
                                                                         </textField>
@@ -837,6 +846,7 @@
                                                                         <outlet property="countLabel" destination="R1y-Ce-geH" id="vw0-pA-HZc"/>
                                                                         <outlet property="detailLabel" destination="Z37-2B-WnK" id="bYV-bj-EIf"/>
                                                                         <outlet property="titleLabel" destination="NmU-Ep-3H3" id="nU2-5w-SJs"/>
+                                                                        <outlet property="yellowPageNameLabel" destination="qnI-bL-N9k" id="Nvn-W2-Ev9"/>
                                                                     </connections>
                                                                 </tableCellView>
                                                             </prototypeCellViews>
@@ -851,10 +861,10 @@
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </clipView>
                                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" id="MNm-KX-zZk">
-                                            <rect key="frame" x="1" y="119" width="223" height="15"/>
+                                            <rect key="frame" x="-100" y="-100" width="223" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
-                                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" controlSize="mini" id="zcf-jN-1j5">
+                                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" arrowsPosition="none" controlSize="mini" id="zcf-jN-1j5">
                                             <rect key="frame" x="224" y="17" width="11" height="102"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>

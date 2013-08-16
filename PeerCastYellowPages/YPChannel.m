@@ -1,6 +1,7 @@
 #import "YPChannel.h"
 #import "YPSettings.h"
 #import "YPFavorite.h"
+#import "YPYellowPage.h"
 #import "GTMNSString+HTML.h"
 
 @interface YPChannel ()
@@ -59,6 +60,12 @@
 - (NSURL *)yellowPageURL
 {
     return [NSURL URLWithString:self.yellowPageURLString];
+}
+
+- (NSString *)yellowPageName
+{
+    YPYellowPage *yellowPage = [YPYellowPage MR_findFirstByAttribute:@"indexDotTxtURLString" withValue:self.yellowPageURLString];
+    return yellowPage.name;
 }
 
 #pragma mark -

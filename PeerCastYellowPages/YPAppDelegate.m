@@ -91,6 +91,7 @@
     self.window.hasMenuBarIcon = YES;
     self.window.attachedToMenuBar = YES;
     self.window.hideWindowControlsWhenAttached = YES;
+
 }
 
 #pragma mark -
@@ -129,6 +130,7 @@
             view.detailLabel.stringValue = channel.detail;
             view.countLabel.stringValue = [NSString stringWithFormat:@"%ld", (long)channel.viewerCount];
             view.contactURLLabel.stringValue = [channel.contactURL absoluteString];
+            view.yellowPageNameLabel.stringValue = channel.yellowPageName;
         }
         
         return view;
