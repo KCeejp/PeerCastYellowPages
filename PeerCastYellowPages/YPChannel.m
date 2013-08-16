@@ -1,7 +1,3 @@
-#import "YPChannel.h"
-#import "YPSettings.h"
-#import "YPFavorite.h"
-#import "YPYellowPage.h"
 #import "GTMNSString+HTML.h"
 
 @interface YPChannel ()
@@ -9,7 +5,6 @@
 // Private interface goes here.
 
 @end
-
 
 @implementation YPChannel
 
@@ -146,6 +141,8 @@
     
     YPFavorite *favorite = [YPFavorite MR_createEntity];
     favorite.keyword = self.name;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:YPNotificationFavoriteCreated object:self];
 }
 
 - (void)deleteFavorite
@@ -153,6 +150,8 @@
     if (!self.favorite) return;
     
     [self.favorite MR_deleteEntity];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:YPNotificationFavoriteDeleted object:self];
 }
 
 - (YPFavorite *)favorite

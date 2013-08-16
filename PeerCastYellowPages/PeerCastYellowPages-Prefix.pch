@@ -12,6 +12,7 @@
     #import "YPSettings.h"
     #import "NSImage+HHTint.h"
 
+    #import "YPConfigurations.h"
     #import "YPFavorite.h"
     #import "YPChannel.h"
     #import "YPYellowPage.h"

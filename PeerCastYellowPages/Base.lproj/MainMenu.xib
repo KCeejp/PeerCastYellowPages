@@ -813,7 +813,7 @@
                                                                             </textFieldCell>
                                                                         </textField>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R1y-Ce-geH">
-                                                                            <rect key="frame" x="24" y="7" width="38" height="17"/>
+                                                                            <rect key="frame" x="24" y="7" width="162" height="17"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="77F-sf-6q5">
                                                                                 <font key="font" metaFont="system"/>

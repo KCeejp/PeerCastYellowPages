@@ -7,7 +7,6 @@
 //
 
 #import "AFHTTPRequestOperation.h"
-#import "YPChannel.h"
 
 @interface YPIndexDotTxtRequestOperation : AFHTTPRequestOperation
 

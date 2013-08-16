@@ -19,9 +19,17 @@
 #import "YPYellowPagesPreferencesViewController.h"
 #import "YPPlayerPreferencesViewController.h"
 
+typedef NS_ENUM(NSUInteger, YPTableViewType) {
+    YPTableViewTypeDefault = 1,
+    YPTableViewTypeFavorite,
+    YPTableViewTypePopular,
+};
+
 @interface YPAppDelegate () <NSUserNotificationCenterDelegate>
 
 @property (nonatomic) NSStatusItem *statusItem;
+
+@property (nonatomic) YPTableViewType tableViewType;
 
 @property (nonatomic) NSArray *channels;
 @property (nonatomic) NSArray *menuArray;
@@ -43,6 +51,8 @@
     [MagicalRecord setupCoreDataStack];
     
     // [self initializeYellowPages];
+    
+    self.tableViewType = YPTableViewTypeDefault;
     
     self.menuArray = @[
                        @{@"imageName": @"53-house", @"name": @"Home"},
@@ -69,6 +79,14 @@
                                                                                                          playerViewController,
                                                                                                          ]];
     self.channelArrayController.managedObjectContext = [NSManagedObjectContext MR_defaultContext];
+    
+    __weak __block __typeof__(self) weakSelf = self;
+    [[NSNotificationCenter defaultCenter] addObserverForName:YPNotificationFavoriteCreated object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+        [weakSelf.tableView reloadData];
+    }];
+    [[NSNotificationCenter defaultCenter] addObserverForName:YPNotificationFavoriteDeleted object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+        [weakSelf.tableView reloadData];
+    }];
 }
 
 - (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification
@@ -99,7 +117,7 @@
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
     if (aTableView == self.tableView) {
-        return [(NSArray *)self.channelArrayController.arrangedObjects count];
+        return self.arrangedChannels.count;
     }
     else {
         return self.menuArray.count;
@@ -109,7 +127,7 @@
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row;
 {
     if (tableView == self.tableView) {
-        YPChannel *channel = self.channels[row];
+        YPChannel *channel = self.arrangedChannels[row];
         return channel.name;
     }
     else {
@@ -121,7 +139,7 @@
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
     if (tableView == self.tableView) {
-        YPChannel *channel = self.channels[row];
+        YPChannel *channel = self.arrangedChannels[row];
         
         YPChannelCellView *view = [tableView makeViewWithIdentifier:@"YPChannelCellView" owner:self];
         if (channel.identifier) {
@@ -145,7 +163,7 @@
         
         NSDictionary *dict = self.menuArray[row];
         view.textField.stringValue = dict[@"name"];
-        view.imageView.image = [NSImage imageNamed:dict[@"imageName"]];
+        view.imageView.image = [[NSImage imageNamed:dict[@"imageName"]] hh_imageTintedWithColor:[NSColor blueColor]];
         
         return view;
     }
@@ -153,10 +171,24 @@
 
 - (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(NSInteger)rowIndex
 {
-    YPChannel *channel = self.channels[rowIndex];
-    
-    [channel openContactURLInBrowser];
-    [channel play];
+    if (aTableView == self.tableView) {
+        YPChannel *channel = self.arrangedChannels[rowIndex];
+        [channel play];
+    }
+    else {
+        switch (rowIndex + 1) {
+            case YPTableViewTypeDefault:
+                self.tableViewType = YPTableViewTypeDefault;
+                break;
+            case YPTableViewTypeFavorite:
+                self.tableViewType = YPTableViewTypeFavorite;
+                break;
+            default:
+                break;
+        }
+        [self.tableView reloadData];
+        
+    }
     
     return NO;
 }
@@ -194,14 +226,14 @@
 - (void)onFavoriteButtonPressed:(id)sender
 {
     NSInteger row = [self indexForEvent]; // or use tag on button, maybe?
-    YPChannel *channel = self.channels[row];
+    YPChannel *channel = self.arrangedChannels[row];
     [channel toggleFavorite];
 }
 
 - (void)onBrowserButtonPressed:(id)sender
 {
     NSInteger row = [self indexForEvent]; // or use tag on button, maybe?
-    YPChannel *channel = self.channels[row];
+    YPChannel *channel = self.arrangedChannels[row];
     [channel openContactURLInBrowser];
 }
 
@@ -211,6 +243,35 @@
     NSPoint pointInTable = [self.tableView convertPoint:[event locationInWindow] fromView:nil];
     NSUInteger row = [self.tableView rowAtPoint:pointInTable];
     return row;
+}
+
+- (NSArray *)arrangedChannels
+{
+    NSArray *arrangedChannels;
+    switch (self.tableViewType) {
+        case YPTableViewTypeDefault: {
+            arrangedChannels = self.channels;
+            break;
+        }
+        case YPTableViewTypeFavorite: {
+            NSArray *favorites = [YPFavorite MR_findAll];
+            NSArray *keywords = [favorites map:^id(id obj) {
+                return [(YPFavorite *)obj keyword];
+            }];
+            arrangedChannels = [self filteredChannelsByKeywords:keywords];
+            break;
+        }
+        default:
+            arrangedChannels = self.channels;
+            break;
+    }
+    return arrangedChannels;
+}
+
+- (NSArray *)filteredChannelsByKeywords:(NSArray *)keywords
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.name IN (%@) || self.detail IN (%@)", keywords, keywords];
+    return [self.channels filteredArrayUsingPredicate:predicate];
 }
 
 @end

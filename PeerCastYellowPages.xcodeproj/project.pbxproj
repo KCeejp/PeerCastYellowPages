@@ -107,6 +107,7 @@
 		D6720EF017BD579E00BC2677 /* YPPlayerPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPPlayerPreferencesViewController.h; sourceTree = "<group>"; };
 		D6720EF117BD579F00BC2677 /* YPPlayerPreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPPlayerPreferencesViewController.m; sourceTree = "<group>"; };
 		D6720EF217BD579F00BC2677 /* YPPlayerPreferencesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YPPlayerPreferencesViewController.xib; sourceTree = "<group>"; };
+		D6720EF517BEE30E00BC2677 /* YPConfigurations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPConfigurations.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,6 +222,7 @@
 		D605591917B963140070C4AD /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D6720EF517BEE30E00BC2677 /* YPConfigurations.h */,
 				D6720ED217BCC92000BC2677 /* YPChannelUpdator.h */,
 				D6720ED317BCC92000BC2677 /* YPChannelUpdator.m */,
 				D6720ECD17BBE03000BC2677 /* CoreDataModels */,
