@@ -32,6 +32,8 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
 @property (nonatomic) YPTableViewType tableViewType;
 
 @property (nonatomic) NSArray *channels;
+@property (nonatomic) NSArray *filteredChannels;
+
 @property (nonatomic) NSArray *menuArray;
 
 @property (nonatomic) MASPreferencesWindowController *preferencesWindowController;
@@ -149,6 +151,12 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
             view.countLabel.stringValue = [NSString stringWithFormat:@"%ld", (long)channel.viewerCount];
             view.yellowPageNameLabel.stringValue = channel.yellowPageName;
             
+            NSImage *starImage = [NSImage imageNamed:@"28-star"];
+            view.favoriteButton.image = (channel.favorite)
+                ? [starImage hh_imageTintedWithColor:[NSColor yellowColor]]
+                : [starImage hh_imageTintedWithColor:[NSColor grayColor]]
+                ;
+            
             view.favoriteButton.target = self;
             view.favoriteButton.action = @selector(onFavoriteButtonPressed:);
             
@@ -186,8 +194,8 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
             default:
                 break;
         }
+        self.searchField.stringValue = @"";
         [self.tableView reloadData];
-        
     }
     
     return NO;
@@ -248,6 +256,18 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
 - (NSArray *)arrangedChannels
 {
     NSArray *arrangedChannels;
+    if (![self.searchField.stringValue isEqualToString:@""]) {
+        arrangedChannels = self.filteredChannels;
+    }
+    else {
+        arrangedChannels = [self baseChannels];
+    }
+    return arrangedChannels;
+}
+
+- (NSArray *)baseChannels
+{
+    NSArray *arrangedChannels;
     switch (self.tableViewType) {
         case YPTableViewTypeDefault: {
             arrangedChannels = self.channels;
@@ -258,7 +278,7 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
             NSArray *keywords = [favorites map:^id(id obj) {
                 return [(YPFavorite *)obj keyword];
             }];
-            arrangedChannels = [self filteredChannelsByKeywords:keywords];
+            arrangedChannels = [self filterChannels:self.channels ByKeywords:keywords];
             break;
         }
         default:
@@ -268,10 +288,21 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
     return arrangedChannels;
 }
 
-- (NSArray *)filteredChannelsByKeywords:(NSArray *)keywords
+- (NSArray *)filterChannels:(NSArray *)channels ByKeywords:(NSArray *)keywords
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.name IN (%@) || self.detail IN (%@)", keywords, keywords];
-    return [self.channels filteredArrayUsingPredicate:predicate];
+    NSMutableArray *predicates = @[].mutableCopy;
+    for (NSString *keyword in keywords) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.name CONTAINS[cd] %@ || self.detail CONTAINS[cd] %@", keyword, keyword];
+        [predicates addObject:predicate];
+    }
+    return [channels filteredArrayUsingPredicate:[NSCompoundPredicate orPredicateWithSubpredicates:predicates]];
+}
+
+- (void)controlTextDidChange:(NSNotification *)obj
+{
+    NSSearchField *searchField = (NSSearchField *)[obj object];
+    self.filteredChannels = [self filterChannels:[self baseChannels] ByKeywords:@[searchField.stringValue]];
+    [self.tableView reloadData];
 }
 
 @end

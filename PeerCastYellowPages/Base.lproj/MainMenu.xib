@@ -754,14 +754,14 @@
                                 <rect key="frame" x="65" y="0.0" width="255" height="480"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
-                                    <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="90" horizontalPageScroll="10" verticalLineScroll="90" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" scrollerKnobStyle="dark" translatesAutoresizingMaskIntoConstraints="NO" id="AgL-W7-TEA" customClass="RFOverlayScrollView">
+                                    <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" scrollerKnobStyle="dark" translatesAutoresizingMaskIntoConstraints="NO" id="AgL-W7-TEA" customClass="RFOverlayScrollView">
                                         <rect key="frame" x="0.0" y="0.0" width="255" height="418"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <clipView key="contentView" ambiguous="YES" misplaced="YES" copiesOnScroll="NO" id="90X-GX-sKB">
                                             <rect key="frame" x="0.0" y="0.0" width="255" height="418"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="88" rowSizeStyle="automatic" viewBased="YES" id="4sF-Z7-oq3">
+                                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="4sF-Z7-oq3">
                                                     <rect key="frame" x="0.0" y="0.0" width="255" height="418"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
@@ -887,6 +887,9 @@
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </searchFieldCell>
+                                        <connections>
+                                            <outlet property="delegate" destination="494" id="3F2-fV-XdA"/>
+                                        </connections>
                                     </searchField>
                                 </subviews>
                             </customView>
@@ -905,6 +908,7 @@
                 <outlet property="menuArrayController" destination="Hn4-rU-E5F" id="Uap-iO-9ZM"/>
                 <outlet property="menuTableView" destination="ICe-hZ-vFp" id="zkT-6a-eCc"/>
                 <outlet property="scrollView" destination="AgL-W7-TEA" id="3Ja-bn-TSb"/>
+                <outlet property="searchField" destination="BaB-LJ-Rid" id="Kx5-Ak-JCR"/>
                 <outlet property="tableView" destination="4sF-Z7-oq3" id="mDe-sE-QZV"/>
                 <outlet property="window" destination="371" id="532"/>
             </connections>

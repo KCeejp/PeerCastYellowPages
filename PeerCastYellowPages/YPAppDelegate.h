@@ -18,4 +18,6 @@
 @property (weak) IBOutlet NSArrayController *channelArrayController;
 @property (weak) IBOutlet NSArrayController *menuArrayController;
 
+@property (weak) IBOutlet NSSearchField *searchField;
+
 @end
