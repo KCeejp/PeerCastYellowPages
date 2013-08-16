@@ -18,6 +18,4 @@
 @property (weak) IBOutlet NSArrayController *channelArrayController;
 @property (weak) IBOutlet NSArrayController *menuArrayController;
 
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-
 @end

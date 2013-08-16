@@ -15,4 +15,7 @@
 @property (nonatomic) NSURL *yellowPageURL;
 @property (nonatomic, copy) NSString *yellowPageName;
 
+@property (nonatomic) YPFavorite *favorite;
+- (void)toggleFavorite;
+
 @end

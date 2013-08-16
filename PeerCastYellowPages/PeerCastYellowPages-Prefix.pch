@@ -10,4 +10,9 @@
     #import "CoreData+MagicalRecord.h"
 
     #import "YPSettings.h"
+    #import "NSImage+HHTint.h"
+
+    #import "YPFavorite.h"
+    #import "YPChannel.h"
+    #import "YPYellowPage.h"
 #endif

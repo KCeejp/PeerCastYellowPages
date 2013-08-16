@@ -5,6 +5,7 @@ PODS:
   - CocoaLumberjack (1.6.2)
   - MagicalRecord (2.1)
   - MASPreferences (1.0)
+  - NSImage-HHTint (0.0.1)
   - OBMenuBarWindow (1.0.0)
   - RFOverlayScrollView (0.1)
 
@@ -14,8 +15,13 @@ DEPENDENCIES:
   - CocoaLumberjack
   - MagicalRecord
   - MASPreferences
+  - NSImage-HHTint (from `https://gist.github.com/KCeejp/0b9dfa8f61152e138d8c/raw/85461164d39ace2d6c86cc4f0766f898c90d85fe/NSImage-HHTint.podspec`)
   - OBMenuBarWindow (~> 1.0.0)
   - RFOverlayScrollView
+
+EXTERNAL SOURCES:
+  NSImage-HHTint:
+    :podspec: https://gist.github.com/KCeejp/0b9dfa8f61152e138d8c/raw/85461164d39ace2d6c86cc4f0766f898c90d85fe/NSImage-HHTint.podspec
 
 SPEC CHECKSUMS:
   AFNetworking: 7f9bcd7c287a75476cd5c61e82fd3380e93e4c54
@@ -23,6 +29,7 @@ SPEC CHECKSUMS:
   CocoaLumberjack: d73e1e317ced14ab930797dda6c17156ff17aaa1
   MagicalRecord: 64e7184c240087a45e9588a722eaf05b0ad837f7
   MASPreferences: b8c112b4b6e6cbd32b8f49d249eb152d1eeb38f8
+  NSImage-HHTint: d825780d0692a7b29b322d88402f56701d6828d2
   OBMenuBarWindow: ca509046488b1ab5967d4e3b1df88250a423631c
   RFOverlayScrollView: c24fab831435320ebb17ead76ffd6e8b9e42704e
 

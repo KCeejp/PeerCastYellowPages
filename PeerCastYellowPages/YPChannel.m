@@ -128,4 +128,36 @@
     return notify;
 }
 
+- (void)toggleFavorite
+{
+    YPFavorite *favorite = self.favorite;
+    
+    if (favorite) {
+        [self deleteFavorite];
+    }
+    else {
+        [self addFavorite];
+    }
+}
+
+- (void)addFavorite
+{
+    if (self.favorite) return;
+    
+    YPFavorite *favorite = [YPFavorite MR_createEntity];
+    favorite.keyword = self.name;
+}
+
+- (void)deleteFavorite
+{
+    if (!self.favorite) return;
+    
+    [self.favorite MR_deleteEntity];
+}
+
+- (YPFavorite *)favorite
+{
+    return [YPFavorite MR_findFirstByAttribute:@"keyword" withValue:self.name];
+}
+
 @end

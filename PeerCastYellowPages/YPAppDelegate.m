@@ -129,8 +129,13 @@
             view.titleLabel.stringValue = channel.name;
             view.detailLabel.stringValue = channel.detail;
             view.countLabel.stringValue = [NSString stringWithFormat:@"%ld", (long)channel.viewerCount];
-            view.contactURLLabel.stringValue = [channel.contactURL absoluteString];
             view.yellowPageNameLabel.stringValue = channel.yellowPageName;
+            
+            view.favoriteButton.target = self;
+            view.favoriteButton.action = @selector(onFavoriteButtonPressed:);
+            
+            view.browserButton.target = self;
+            view.browserButton.action = @selector(onBrowserButtonPressed:);
         }
         
         return view;
@@ -184,6 +189,28 @@
 - (void)displayPreferences
 {
     [self.preferencesWindowController showWindow:nil];
+}
+
+- (void)onFavoriteButtonPressed:(id)sender
+{
+    NSInteger row = [self indexForEvent]; // or use tag on button, maybe?
+    YPChannel *channel = self.channels[row];
+    [channel toggleFavorite];
+}
+
+- (void)onBrowserButtonPressed:(id)sender
+{
+    NSInteger row = [self indexForEvent]; // or use tag on button, maybe?
+    YPChannel *channel = self.channels[row];
+    [channel openContactURLInBrowser];
+}
+
+- (NSUInteger)indexForEvent
+{
+    NSEvent *event = [NSApp currentEvent];
+    NSPoint pointInTable = [self.tableView convertPoint:[event locationInWindow] fromView:nil];
+    NSUInteger row = [self.tableView rowAtPoint:pointInTable];
+    return row;
 }
 
 @end

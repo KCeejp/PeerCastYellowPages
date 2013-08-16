@@ -754,14 +754,14 @@
                                 <rect key="frame" x="65" y="0.0" width="255" height="480"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
-                                    <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" scrollerKnobStyle="dark" translatesAutoresizingMaskIntoConstraints="NO" id="AgL-W7-TEA" customClass="RFOverlayScrollView">
+                                    <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="90" horizontalPageScroll="10" verticalLineScroll="90" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" scrollerKnobStyle="dark" translatesAutoresizingMaskIntoConstraints="NO" id="AgL-W7-TEA" customClass="RFOverlayScrollView">
                                         <rect key="frame" x="0.0" y="0.0" width="255" height="418"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <clipView key="contentView" ambiguous="YES" misplaced="YES" copiesOnScroll="NO" id="90X-GX-sKB">
                                             <rect key="frame" x="0.0" y="0.0" width="255" height="418"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="4sF-Z7-oq3">
+                                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="88" rowSizeStyle="automatic" viewBased="YES" id="4sF-Z7-oq3">
                                                     <rect key="frame" x="0.0" y="0.0" width="255" height="418"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
@@ -821,30 +821,40 @@
                                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                             </textFieldCell>
                                                                         </textField>
-                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="taC-MK-Hid">
-                                                                            <rect key="frame" x="88" y="7" width="164" height="17"/>
-                                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="KzL-Jr-TdV">
-                                                                                <font key="font" metaFont="system"/>
-                                                                                <color key="textColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
-                                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                                            </textFieldCell>
-                                                                        </textField>
                                                                         <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7PJ-3x-L7o">
                                                                             <rect key="frame" x="3" y="3" width="16" height="22"/>
                                                                             <autoresizingMask key="autoresizingMask"/>
                                                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="12-eye" id="ocU-CH-zSP"/>
                                                                         </imageView>
-                                                                        <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zlY-c0-98U">
-                                                                            <rect key="frame" x="67" y="3" width="16" height="22"/>
-                                                                            <autoresizingMask key="autoresizingMask"/>
-                                                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="401-globe" id="oPT-mf-fG5"/>
-                                                                        </imageView>
+                                                                        <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N4w-gF-fcd">
+                                                                            <rect key="frame" x="196" y="7" width="53" height="20"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                            <subviews>
+                                                                                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sgD-8f-Pus">
+                                                                                    <rect key="frame" x="3" y="0.0" width="20" height="20"/>
+                                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="401-globe" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="MsW-GC-3Zu">
+                                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                                        <font key="font" metaFont="system"/>
+                                                                                    </buttonCell>
+                                                                                </button>
+                                                                                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ytL-NI-ASN">
+                                                                                    <rect key="frame" x="33" y="0.0" width="20" height="20"/>
+                                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="28-star" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="KOu-Wi-PCt">
+                                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                                        <font key="font" metaFont="system"/>
+                                                                                    </buttonCell>
+                                                                                </button>
+                                                                            </subviews>
+                                                                        </customView>
                                                                     </subviews>
                                                                     <connections>
-                                                                        <outlet property="contactURLLabel" destination="taC-MK-Hid" id="eiY-7a-cNU"/>
+                                                                        <outlet property="browserButton" destination="sgD-8f-Pus" id="KZy-GF-mFb"/>
                                                                         <outlet property="countLabel" destination="R1y-Ce-geH" id="vw0-pA-HZc"/>
                                                                         <outlet property="detailLabel" destination="Z37-2B-WnK" id="bYV-bj-EIf"/>
+                                                                        <outlet property="favoriteButton" destination="ytL-NI-ASN" id="3rb-BG-C29"/>
+                                                                        <outlet property="overlayView" destination="N4w-gF-fcd" id="5Eu-hJ-UxE"/>
                                                                         <outlet property="titleLabel" destination="NmU-Ep-3H3" id="nU2-5w-SJs"/>
                                                                         <outlet property="yellowPageNameLabel" destination="qnI-bL-N9k" id="Nvn-W2-Ev9"/>
                                                                     </connections>
@@ -909,6 +919,7 @@
     </objects>
     <resources>
         <image name="12-eye" width="24" height="16"/>
+        <image name="28-star" width="26" height="26"/>
         <image name="401-globe" width="28" height="28"/>
         <image name="NSActionTemplate" width="15" height="15"/>
     </resources>
