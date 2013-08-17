@@ -23,8 +23,19 @@
 {
     [super awakeFromNib];
     
+    [self populateValues];
+    
+    __weak __block __typeof__(self) weakSelf = self;
+    [[NSNotificationCenter defaultCenter] addObserverForName:YPNotificationDidResetSettings object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+        [weakSelf populateValues];
+    }];
+}
+
+- (void)populateValues
+{
     self.peerCastHostTextField.stringValue = [YPSettings sharedSettings].peerCastHost;
     self.peerCastPortTextField.stringValue = [NSString stringWithFormat:@"%lu", (unsigned long)[YPSettings sharedSettings].peerCastPort];
+    self.refreshIntervalForm.stringValue = [NSString stringWithFormat:@"%lu", (unsigned long)[YPSettings sharedSettings].refreshInterval];
 }
 
 #pragma mark - MASPreferencesViewController
@@ -54,6 +65,9 @@
     if (self.peerCastPortTextField == obj.object) {
         [YPSettings sharedSettings].peerCastPort = [self.peerCastPortTextField.stringValue integerValue];
     }
+    if (self.refreshIntervalForm == obj.object) {
+        [YPSettings sharedSettings].refreshInterval = [self.refreshIntervalForm.stringValue integerValue];
+    }
 }
 
 - (IBAction)onStartOnSystemStartUpChanged:(id)sender
@@ -66,6 +80,11 @@
             [YPSettings sharedSettings].startOnSystemStartUp = NO;
             break;
     }
+}
+
+- (IBAction)onResetButtonPressed:(id)sender
+{
+    [[YPSettings sharedSettings] resetSettings];
 }
 
 @end

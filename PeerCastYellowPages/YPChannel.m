@@ -1,4 +1,5 @@
 #import "GTMNSString+HTML.h"
+#import "CHCSVParser.h"
 
 @interface YPChannel ()
 
@@ -67,7 +68,8 @@
 
 - (void)play
 {
-    NSTask *task = [NSTask launchedTaskWithLaunchPath:@"/usr/bin/open" arguments:@[@"-a", @"/Applications/Flip Player.app", [self.plsURL absoluteString]]];
+    NSArray *commands = [self parsePlayerCommand];
+    NSTask *task = [NSTask launchedTaskWithLaunchPath:commands[0] arguments:[commands objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, commands.count - 1)]]];
     [task waitUntilExit];
     
     NSUserNotification *notification = [[NSUserNotification alloc] init];
@@ -76,6 +78,34 @@
     notification.soundName = nil;
     
     [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+    [self parsePlayerCommand];
+}
+
+- (NSArray *)parsePlayerCommand
+{
+    NSString *playerCommand = [YPSettings sharedSettings].playerCommand;
+    playerCommand = [playerCommand stringByReplacingOccurrencesOfString:@" " withString:@","];
+    
+    NSArray *strings = [playerCommand CSVComponents][0];
+    
+    NSMutableArray *commands = @[].mutableCopy;
+    for (NSString *string in strings) {
+        NSString *command;
+        if ([string isEqualToString:YPPlaceholderForPlaylistURL]) {
+            command = [self.streamURL absoluteString];
+        }
+        else if ([string isEqualToString:YPPlaceholderForStreamURL]) {
+            command = [self.streamURL absoluteString];
+        }
+        else {
+            command = string;
+        }
+        command = [command stringByReplacingOccurrencesOfString:@"," withString:@" "];
+        command = [command stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+        
+        [commands addObject:command];
+    }
+    return commands;
 }
 
 - (void)openContactURLInBrowser

@@ -38,6 +38,9 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
 
 @property (nonatomic) MASPreferencesWindowController *preferencesWindowController;
 
+@property (nonatomic) NSTimer *refreshTimer;
+@property (nonatomic) id refreshTimerObserver;
+
 @end
 
 @implementation YPAppDelegate
@@ -52,8 +55,6 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
     // Insert code here to initialize your application
     [MagicalRecord setupCoreDataStack];
     
-    // [self initializeYellowPages];
-    
     self.tableViewType = YPTableViewTypeDefault;
     
     self.menuArray = @[
@@ -65,11 +66,10 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
     
     [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
     
+    [self resetRefreshTimer];
     
     [self fetchYellowPages:nil];
     
-    NSTimeInterval interval = 2 * 60;
-    [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(fetchYellowPages:) userInfo:nil repeats:YES];
     
     YPGeneralPreferencesViewController *generalViewController = [[YPGeneralPreferencesViewController alloc] init];
     YPYellowPagesPreferencesViewController *yellowPagesViewController = [[YPYellowPagesPreferencesViewController alloc] init];
@@ -88,6 +88,20 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
     }];
     [[NSNotificationCenter defaultCenter] addObserverForName:YPNotificationFavoriteDeleted object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         [weakSelf.tableView reloadData];
+    }];
+}
+
+- (void)resetRefreshTimer
+{
+    [self.refreshTimer invalidate];
+    
+    NSTimeInterval interval = [YPSettings sharedSettings].refreshInterval;
+    self.refreshTimer = [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(fetchYellowPages:) userInfo:nil repeats:YES];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self.refreshTimerObserver];
+    __weak __block __typeof__(self) weakSelf = self;
+    self.refreshTimerObserver =  [[NSNotificationCenter defaultCenter] addObserverForName:YPNotificationRefreshIntervalChanged object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+        [weakSelf resetRefreshTimer];
     }];
 }
 
@@ -199,21 +213,6 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
     }
     
     return NO;
-}
-
-- (void)initializeYellowPages
-{
-    NSArray *URLs = @[
-                      @{@"name":@"SP", @"url":[NSURL URLWithString:@"http://bayonet.ddo.jp/sp/index.txt"]},
-                      @{@"name":@"TP", @"url":[NSURL URLWithString:@"http://temp.orz.hm/yp/index.txt"]},
-                      @{@"name":@"DP", @"url":[NSURL URLWithString:@"http://dp.prgrssv.net/index.txt"]},
-                      @{@"name":@"HKTV", @"url":[NSURL URLWithString:@"http://games.himitsukichi.com/hktv/index.txt"]},
-                      ];
-    for (NSDictionary *dict in URLs) {
-        YPYellowPage *yellowPage = [YPYellowPage MR_createEntity];
-        yellowPage.name = dict[@"name"];
-        yellowPage.indexDotTxtURL = dict[@"url"];
-    }
 }
 
 - (IBAction)onPreferencesButtonPressed:(id)sender

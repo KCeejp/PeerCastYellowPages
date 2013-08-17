@@ -10,4 +10,7 @@
 
 @interface YPPlayerPreferencesViewController : NSViewController <MASPreferencesViewController>
 
+@property (weak) IBOutlet NSTextField *playerCommandTextField;
+@property (weak) IBOutlet NSTextField *descriptionLabel;
+
 @end
