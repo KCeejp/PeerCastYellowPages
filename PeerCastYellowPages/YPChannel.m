@@ -1,14 +1,11 @@
-#import "YPChannel.h"
-#import "YPSettings.h"
-#import "YPFavorite.h"
 #import "GTMNSString+HTML.h"
+#import "CHCSVParser.h"
 
 @interface YPChannel ()
 
 // Private interface goes here.
 
 @end
-
 
 @implementation YPChannel
 
@@ -61,11 +58,18 @@
     return [NSURL URLWithString:self.yellowPageURLString];
 }
 
+- (NSString *)yellowPageName
+{
+    YPYellowPage *yellowPage = [YPYellowPage MR_findFirstByAttribute:@"indexDotTxtURLString" withValue:self.yellowPageURLString];
+    return yellowPage.name;
+}
+
 #pragma mark -
 
 - (void)play
 {
-    NSTask *task = [NSTask launchedTaskWithLaunchPath:@"/usr/bin/open" arguments:@[@"-a", @"/Applications/Flip Player.app", [self.plsURL absoluteString]]];
+    NSArray *commands = [self parsePlayerCommand];
+    NSTask *task = [NSTask launchedTaskWithLaunchPath:commands[0] arguments:[commands objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, commands.count - 1)]]];
     [task waitUntilExit];
     
     NSUserNotification *notification = [[NSUserNotification alloc] init];
@@ -74,6 +78,34 @@
     notification.soundName = nil;
     
     [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+    [self parsePlayerCommand];
+}
+
+- (NSArray *)parsePlayerCommand
+{
+    NSString *playerCommand = [YPSettings sharedSettings].playerCommand;
+    playerCommand = [playerCommand stringByReplacingOccurrencesOfString:@" " withString:@","];
+    
+    NSArray *strings = [playerCommand CSVComponents][0];
+    
+    NSMutableArray *commands = @[].mutableCopy;
+    for (NSString *string in strings) {
+        NSString *command;
+        if ([string isEqualToString:YPPlaceholderForPlaylistURL]) {
+            command = [self.streamURL absoluteString];
+        }
+        else if ([string isEqualToString:YPPlaceholderForStreamURL]) {
+            command = [self.streamURL absoluteString];
+        }
+        else {
+            command = string;
+        }
+        command = [command stringByReplacingOccurrencesOfString:@"," withString:@" "];
+        command = [command stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+        
+        [commands addObject:command];
+    }
+    return commands;
 }
 
 - (void)openContactURLInBrowser
@@ -119,6 +151,42 @@
     [regex enumerateMatchesInString:self.detail options:0 range:NSMakeRange(0, self.detail.length) usingBlock:block];
     
     return notify;
+}
+
+- (void)toggleFavorite
+{
+    YPFavorite *favorite = self.favorite;
+    
+    if (favorite) {
+        [self deleteFavorite];
+    }
+    else {
+        [self addFavorite];
+    }
+}
+
+- (void)addFavorite
+{
+    if (self.favorite) return;
+    
+    YPFavorite *favorite = [YPFavorite MR_createEntity];
+    favorite.keyword = self.name;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:YPNotificationFavoriteCreated object:self];
+}
+
+- (void)deleteFavorite
+{
+    if (!self.favorite) return;
+    
+    [self.favorite MR_deleteEntity];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:YPNotificationFavoriteDeleted object:self];
+}
+
+- (YPFavorite *)favorite
+{
+    return [YPFavorite MR_findFirstByAttribute:@"keyword" withValue:self.name];
 }
 
 @end

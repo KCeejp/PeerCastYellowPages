@@ -7,17 +7,24 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "OBMenuBarWindow.h"
+
+#import "INAppStoreWindow.h"
+
+@class WebView;
 
 @interface YPAppDelegate : NSObject <NSApplicationDelegate>
 
-@property (assign) IBOutlet OBMenuBarWindow *window;
+@property (assign) IBOutlet INAppStoreWindow *window;
 @property (weak) IBOutlet NSTableView *tableView;
 @property (weak) IBOutlet NSTableView *menuTableView;
 
 @property (weak) IBOutlet NSArrayController *channelArrayController;
 @property (weak) IBOutlet NSArrayController *menuArrayController;
 
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (weak) IBOutlet NSSearchField *searchField;
+
+@property (weak) IBOutlet NSDrawer *drawer;
+@property (weak) IBOutlet NSView *drawerView;
+@property (weak) IBOutlet WebView *webView;
 
 @end

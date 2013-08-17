@@ -1,5 +1,5 @@
 #include "Pods-MagicalRecord.xcconfig"
 GCC_PREPROCESSOR_DEFINITIONS = COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/BuildHeaders" "${PODS_ROOT}/BuildHeaders/MagicalRecord" "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/AFNetworking" "${PODS_ROOT}/Headers/BlocksKit" "${PODS_ROOT}/Headers/CocoaLumberjack" "${PODS_ROOT}/Headers/MASPreferences" "${PODS_ROOT}/Headers/MagicalRecord" "${PODS_ROOT}/Headers/OBMenuBarWindow"
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/BuildHeaders" "${PODS_ROOT}/BuildHeaders/MagicalRecord" "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/AFNetworking" "${PODS_ROOT}/Headers/BlocksKit" "${PODS_ROOT}/Headers/CHCSVParser" "${PODS_ROOT}/Headers/CocoaLumberjack" "${PODS_ROOT}/Headers/INAppStoreWindow" "${PODS_ROOT}/Headers/MASPreferences" "${PODS_ROOT}/Headers/MagicalRecord" "${PODS_ROOT}/Headers/NSImage-HHTint" "${PODS_ROOT}/Headers/OBMenuBarWindow" "${PODS_ROOT}/Headers/RFOverlayScrollView"
 OTHER_LDFLAGS = -ObjC ${PODS_MAGICALRECORD_OTHER_LDFLAGS}
 PODS_ROOT = ${SRCROOT}

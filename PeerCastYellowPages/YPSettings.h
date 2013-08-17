@@ -12,12 +12,14 @@
 
 + (YPSettings *)sharedSettings;
 
-- (void)initializeSettings;
+- (void)resetSettings;
 
 @property (nonatomic, getter=isInitialLaunchFinished) BOOL initialLaunchFinished;
 @property (nonatomic) BOOL startOnSystemStartUp;
 
 @property (nonatomic, copy) NSString *peerCastHost;
 @property (nonatomic) NSUInteger peerCastPort;
+@property (nonatomic) NSUInteger refreshInterval;
+@property (nonatomic, copy) NSString *playerCommand;
 
 @end

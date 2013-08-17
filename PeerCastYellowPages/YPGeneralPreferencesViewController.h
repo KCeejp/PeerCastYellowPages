@@ -13,5 +13,7 @@
 @property (weak) IBOutlet NSTextField *peerCastHostTextField;
 @property (weak) IBOutlet NSTextField *peerCastPortTextField;
 @property (weak) IBOutlet NSButton *startOnSystemStartUpButton;
+@property (weak) IBOutlet NSForm *refreshIntervalForm;
+@property (weak) IBOutlet NSButton *resetButton;
 
 @end

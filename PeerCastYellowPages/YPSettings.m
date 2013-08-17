@@ -12,6 +12,8 @@ static NSString * const YPSettingsInitialLaunchFinished = @"YPSettingsInitialLau
 static NSString * const YPSettingsStartOnSystemStartUp = @"YPSettingsStartOnSystemStartUp";
 static NSString * const YPSettingsPeerCastHost = @"YPSettingsPeerCastHost";
 static NSString * const YPSettingsPeerCastPort = @"YPSettingsPeerCastPort";
+static NSString * const YPSettingsRefreshInterval = @"YPSettingsRefreshInterval";
+static NSString * const YPSettingsPlayerCommand = @"YPSettingsPlayerCommand";
 
 @implementation YPSettings
 
@@ -24,7 +26,7 @@ static NSString * const YPSettingsPeerCastPort = @"YPSettingsPeerCastPort";
     dispatch_once(&once, ^ {
         instance = [[YPSettings alloc] init];
         if (!instance.isInitialLaunchFinished) {
-            [instance initializeSettings];
+            [instance resetSettings];
         }
     });
     return instance;
@@ -32,14 +34,38 @@ static NSString * const YPSettingsPeerCastPort = @"YPSettingsPeerCastPort";
 
 #pragma mark -
 
-- (void)initializeSettings
+- (void)resetSettings
 {
     self.startOnSystemStartUp = YES;
     
     self.peerCastHost = @"localhost";
     self.peerCastPort = 7144;
+    self.refreshInterval = 2 * 60;
+    self.playerCommand = [NSString stringWithFormat:@"/usr/bin/open -a \"/Applications/Flip Player.app\" %@", YPPlaceholderForPlaylistURL];
+    
+    [self initializeYellowPages];
     
     self.initialLaunchFinished = YES;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:YPNotificationDidResetSettings object:nil];
+}
+
+- (void)initializeYellowPages
+{
+    [YPYellowPage MR_truncateAll];
+    
+    NSArray *URLs = @[
+                      @{@"name":@"SP", @"url":[NSURL URLWithString:@"http://bayonet.ddo.jp/sp/index.txt"]},
+                      @{@"name":@"TP", @"url":[NSURL URLWithString:@"http://temp.orz.hm/yp/index.txt"]},
+                      @{@"name":@"DP", @"url":[NSURL URLWithString:@"http://dp.prgrssv.net/index.txt"]},
+                      @{@"name":@"HKTV", @"url":[NSURL URLWithString:@"http://games.himitsukichi.com/hktv/index.txt"]},
+                      ];
+    
+    for (NSDictionary *dict in URLs) {
+        YPYellowPage *yellowPage = [YPYellowPage MR_createEntity];
+        yellowPage.name = dict[@"name"];
+        yellowPage.indexDotTxtURL = dict[@"url"];
+    }
 }
 
 #pragma mark - Getter/Setter
@@ -86,6 +112,32 @@ static NSString * const YPSettingsPeerCastPort = @"YPSettingsPeerCastPort";
 - (NSUInteger)peerCastPort
 {
     return [[[NSUserDefaults standardUserDefaults] objectForKey:YPSettingsPeerCastPort] unsignedIntegerValue];
+}
+
+- (void)setRefreshInterval:(NSUInteger)refreshInterval
+{
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithUnsignedInteger:refreshInterval] forKey:YPSettingsRefreshInterval];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:YPNotificationRefreshIntervalChanged object:nil];
+}
+
+- (NSUInteger)refreshInterval
+{
+    return [[[NSUserDefaults standardUserDefaults] objectForKey:YPSettingsRefreshInterval] unsignedIntegerValue];
+}
+
+- (void)setPlayerCommand:(NSString *)playerCommand
+{
+    [[NSUserDefaults standardUserDefaults] setObject:playerCommand forKey:YPSettingsPlayerCommand];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:YPNotificationPlayerCommendChanged object:nil];
+}
+
+- (NSString *)playerCommand
+{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:YPSettingsPlayerCommand];
 }
 
 @end

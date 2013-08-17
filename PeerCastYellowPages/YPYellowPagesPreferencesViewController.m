@@ -44,13 +44,14 @@ typedef NS_ENUM(NSUInteger, YPSegmentedControlIndex) {
 
 - (NSImage *)toolbarItemImage
 {
-    return [NSImage imageNamed:NSImageNamePreferencesGeneral];
+    return [NSImage imageNamed:NSImageNameAdvanced];
 }
 
 - (NSString *)toolbarItemLabel
 {
     return NSLocalizedString(@"YellowPages", @"Toolbar item name for the General preference pane");
 }
+
 - (IBAction)onYellowPagesSegmentedControlChanged:(id)sender
 {
     switch ([(NSSegmentedControl *)sender selectedSegment]) {
@@ -91,6 +92,39 @@ typedef NS_ENUM(NSUInteger, YPSegmentedControlIndex) {
         default:
             break;
     }
+}
+
+- (void)controlTextDidEndEditing:(NSNotification *)obj
+{
+    /*
+    if (obj.object == self.favoriteTableView) {
+        NSArray *favorites = [self.favoriteArrayController selectedObjects];
+        for (YPFavorite *favorite in favorites) {
+            if (!favorite.keyword || [favorite.keyword isEqualToString:@""]) {
+                [self.favoriteArrayController remove:favorite];
+            }
+        }
+    }
+    else if (obj.object == self.yellowPagesTableView) {
+        NSArray *yellowPages = [self.yellowPagesArrayController selectedObjects];
+        for (YPYellowPage *yellowPage in yellowPages) {
+            if (!yellowPage.name || [yellowPage.name isEqualToString:@""] || !yellowPage.indexDotTxtURLString || [yellowPage.indexDotTxtURLString isEqualToString:@""]) {
+                [self.yellowPagesArrayController remove:yellowPage];
+            }
+        }
+    }
+    */
+}
+
+- (void)tableViewSelectionDidChange:(NSNotification *)aNotification
+{
+    [self performBlock:^(id sender) {
+        NSTableView *tableView = aNotification.object;
+        NSIndexSet *indexes = [tableView selectedRowIndexes];
+        
+        NSUInteger rowSelected = [indexes firstIndex];
+        [tableView editColumn:0 row:rowSelected withEvent:nil select:YES];  // This works here!
+    } afterDelay:.5f];
 }
 
 @end
