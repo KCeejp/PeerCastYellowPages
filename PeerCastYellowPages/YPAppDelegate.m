@@ -303,7 +303,7 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
             NSArray *keywords = [favorites map:^id(id obj) {
                 return [(YPFavorite *)obj keyword];
             }];
-            arrangedChannels = [self filterChannels:self.channels ByKeywords:keywords];
+            arrangedChannels = [self filterChannels:self.channels byKeywords:keywords];
             break;
         }
         default:
@@ -313,11 +313,11 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
     return arrangedChannels;
 }
 
-- (NSArray *)filterChannels:(NSArray *)channels ByKeywords:(NSArray *)keywords
+- (NSArray *)filterChannels:(NSArray *)channels byKeywords:(NSArray *)keywords
 {
     NSMutableArray *predicates = @[].mutableCopy;
     for (NSString *keyword in keywords) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.name CONTAINS[cd] %@ || self.detail CONTAINS[cd] %@", keyword, keyword];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.name CONTAINS[cd] %@ || self.detail CONTAINS[cd] %@ || self.genre CONTAINS[cd] %@", keyword, keyword, keyword];
         [predicates addObject:predicate];
     }
     return [channels filteredArrayUsingPredicate:[NSCompoundPredicate orPredicateWithSubpredicates:predicates]];
@@ -326,7 +326,7 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
 - (void)controlTextDidChange:(NSNotification *)obj
 {
     NSSearchField *searchField = (NSSearchField *)[obj object];
-    self.filteredChannels = [self filterChannels:[self baseChannels] ByKeywords:@[searchField.stringValue]];
+    self.filteredChannels = [self filterChannels:[self baseChannels] byKeywords:@[searchField.stringValue]];
     [self.tableView reloadData];
 }
 
