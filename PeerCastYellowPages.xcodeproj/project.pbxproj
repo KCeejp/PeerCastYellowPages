@@ -21,6 +21,7 @@
 		D605590717B93D8F0070C4AD /* PeerCastYellowPagesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D605590617B93D8F0070C4AD /* PeerCastYellowPagesTests.m */; };
 		D605591217B94F6C0070C4AD /* YPIndexDotTxtRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = D605591117B94F6C0070C4AD /* YPIndexDotTxtRequestOperation.m */; };
 		D605591517B94FB30070C4AD /* YPYellowPagesClient.m in Sources */ = {isa = PBXBuildFile; fileRef = D605591417B94FB30070C4AD /* YPYellowPagesClient.m */; };
+		D64031CF17C008B500BD25C3 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64031CE17C008B500BD25C3 /* WebKit.framework */; };
 		D6720EAA17BA956700BC2677 /* YPChannelCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = D6720EA917BA956700BC2677 /* YPChannelCellView.m */; };
 		D6720EB617BAAAC100BC2677 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = D6720EB517BAAAC100BC2677 /* GTMNSString+HTML.m */; };
 		D6720EBA17BBDD5700BC2677 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D6720EB817BBDD5700BC2677 /* Model.xcdatamodeld */; };
@@ -77,6 +78,7 @@
 		D605591317B94FB30070C4AD /* YPYellowPagesClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPYellowPagesClient.h; sourceTree = "<group>"; };
 		D605591417B94FB30070C4AD /* YPYellowPagesClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPYellowPagesClient.m; sourceTree = "<group>"; };
 		D64031CC17BF280D00BD25C3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		D64031CE17C008B500BD25C3 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		D6720EA817BA956700BC2677 /* YPChannelCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPChannelCellView.h; sourceTree = "<group>"; };
 		D6720EA917BA956700BC2677 /* YPChannelCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPChannelCellView.m; sourceTree = "<group>"; };
 		D6720EB317BAAAC100BC2677 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D64031CF17C008B500BD25C3 /* WebKit.framework in Frameworks */,
 				D60558DD17B93D8F0070C4AD /* Cocoa.framework in Frameworks */,
 				451F86063A3144E4A3A6F87F /* libPods.a in Frameworks */,
 			);
@@ -156,6 +159,7 @@
 		D60558DB17B93D8F0070C4AD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D64031CE17C008B500BD25C3 /* WebKit.framework */,
 				D64031CC17BF280D00BD25C3 /* SystemConfiguration.framework */,
 				D60558DC17B93D8F0070C4AD /* Cocoa.framework */,
 				D60558FB17B93D8F0070C4AD /* XCTest.framework */,

@@ -8,6 +8,7 @@
 
 #import "YPAppDelegate.h"
 
+#import <WebKit/WebKit.h>
 #import "YPChannelUpdator.h"
 
 // Views
@@ -97,6 +98,8 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
     
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:0];
     [self.menuTableView selectRowIndexes:indexSet byExtendingSelection:NO];
+    
+    [self.webView setCustomUserAgent:@"Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3"];
 }
 
 - (void)resetRefreshTimer
@@ -217,7 +220,8 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
     BOOL shouldSelectRow = NO;
     if (aTableView == self.tableView) {
         YPChannel *channel = self.arrangedChannels[rowIndex];
-        [channel play];
+        // [channel play];
+        [self openWebViewDrawerWithURL:channel.contactURL];
     }
     else {
         switch (rowIndex + 1) {
@@ -341,13 +345,70 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
         default:
             break;
     }
-    
+    segmentedControl.selectedSegment = -1;
+}
+
+- (IBAction)onWebViewTopSegmentedControlPressed:(id)sender
+{
+    NSSegmentedControl *segmentedControl = (NSSegmentedControl *)sender;
+    switch (segmentedControl.selectedSegment) {
+        case 1: {
+            [self.drawer close];
+            break;
+        }
+        default:
+            break;
+    }
+    segmentedControl.selectedSegment = -1;
+}
+
+- (IBAction)onWebViewBottomSegmentedControlPressed:(id)sender
+{
+    NSSegmentedControl *segmentedControl = (NSSegmentedControl *)sender;
+    switch (segmentedControl.selectedSegment) {
+        case 1:
+            [self.webView reload:nil];
+            break;
+        case 2:
+            [self.webView goBack];
+            break;
+        case 3:
+            [self.webView goForward];
+            break;
+        default:
+            break;
+    }
+    segmentedControl.selectedSegment = -1;
 }
 
 - (void)openWindow:(id)sender
 {
     [self.window makeKeyAndOrderFront:nil];
     [NSApp activateIgnoringOtherApps:YES];
+}
+
+- (void)openWebViewDrawerWithURL:(NSURL *)URL
+{
+    if (self.drawer.state == NSDrawerOpeningState || self.drawer.state == NSDrawerOpenState) {
+        if ([self.webView.mainFrameURL isEqualToString:[URL absoluteString]]) {
+            [self.drawer close];
+        }
+        else {
+            [self.webView.mainFrame loadRequest:[NSURLRequest requestWithURL:URL]];
+        }
+    }
+    else {
+        self.drawer.contentSize = NSSizeFromCGSize(self.drawerView.frame.size);
+        [self.drawer openOnEdge:NSMaxXEdge];
+        [self.webView.mainFrame loadRequest:[NSURLRequest requestWithURL:URL]];
+    }
+}
+
+#pragma mark - NSDrawerViewDelegate
+
+- (NSSize)drawerWillResizeContents:(NSDrawer *)sender toSize:(NSSize)contentSize
+{
+    return [sender contentSize];
 }
 
 @end

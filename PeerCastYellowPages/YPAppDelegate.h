@@ -7,8 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "OBMenuBarWindow.h"
+
 #import "INAppStoreWindow.h"
+
+@class WebView;
 
 @interface YPAppDelegate : NSObject <NSApplicationDelegate>
 
@@ -20,5 +22,9 @@
 @property (weak) IBOutlet NSArrayController *menuArrayController;
 
 @property (weak) IBOutlet NSSearchField *searchField;
+
+@property (weak) IBOutlet NSDrawer *drawer;
+@property (weak) IBOutlet NSView *drawerView;
+@property (weak) IBOutlet WebView *webView;
 
 @end

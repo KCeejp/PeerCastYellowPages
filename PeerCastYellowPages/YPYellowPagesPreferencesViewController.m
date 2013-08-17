@@ -44,7 +44,7 @@ typedef NS_ENUM(NSUInteger, YPSegmentedControlIndex) {
 
 - (NSImage *)toolbarItemImage
 {
-    return [NSImage imageNamed:NSImageNamePreferencesGeneral];
+    return [NSImage imageNamed:NSImageNameAdvanced];
 }
 
 - (NSString *)toolbarItemLabel
