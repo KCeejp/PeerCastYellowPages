@@ -8,10 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 #import "OBMenuBarWindow.h"
+#import "INAppStoreWindow.h"
 
 @interface YPAppDelegate : NSObject <NSApplicationDelegate>
 
-@property (assign) IBOutlet OBMenuBarWindow *window;
+@property (assign) IBOutlet INAppStoreWindow *window;
 @property (weak) IBOutlet NSTableView *tableView;
 @property (weak) IBOutlet NSTableView *menuTableView;
 

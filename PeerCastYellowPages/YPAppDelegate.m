@@ -9,7 +9,6 @@
 #import "YPAppDelegate.h"
 
 #import "YPChannelUpdator.h"
-#import "YPYellowPage.h"
 
 // Views
 #import "YPChannelCellView.h"
@@ -55,12 +54,18 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
     // Insert code here to initialize your application
     [MagicalRecord setupCoreDataStack];
     
+    self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
+    [self.statusItem setImage:[NSImage imageNamed:@"PeerCastYellowPagesLogo"]];
+    [self.statusItem setHighlightMode:YES];
+    [self.statusItem setEnabled:YES];
+    [self.statusItem setTarget:self];
+    [self.statusItem setAction:@selector(openWindow:)];
+
     self.tableViewType = YPTableViewTypeDefault;
     
     self.menuArray = @[
-                       @{@"imageName": @"53-house", @"name": @"Home"},
+                       @{@"imageName": @"400-list2", @"name": @"Home"},
                        @{@"imageName": @"28-star", @"name": @"Favorite"},
-                       @{@"imageName": @"28-star", @"name": @"Popular"},
                        ];
     [self.menuTableView reloadData];
     
@@ -89,6 +94,9 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
     [[NSNotificationCenter defaultCenter] addObserverForName:YPNotificationFavoriteDeleted object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         [weakSelf.tableView reloadData];
     }];
+    
+    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:0];
+    [self.menuTableView selectRowIndexes:indexSet byExtendingSelection:NO];
 }
 
 - (void)resetRefreshTimer
@@ -121,11 +129,16 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
 
 - (void)awakeFromNib
 {
+    /*
     self.window.menuBarIcon = [NSImage imageNamed:@"PeerCastYellowPagesLogo"];
     self.window.hasMenuBarIcon = YES;
     self.window.attachedToMenuBar = YES;
     self.window.hideWindowControlsWhenAttached = YES;
-
+    */
+    
+    INAppStoreWindow *window = (INAppStoreWindow*)self.window;
+    window.titleBarHeight = 55.f;
+    window.centerTrafficLightButtons = YES;
 }
 
 #pragma mark -
@@ -162,7 +175,12 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
             
             view.titleLabel.stringValue = channel.name;
             view.detailLabel.stringValue = channel.detail;
-            view.countLabel.stringValue = [NSString stringWithFormat:@"%ld", (long)channel.viewerCount];
+            view.genreLabel.stringValue = channel.genre;
+            view.countLabel.stringValue = [NSString stringWithFormat:@"%d/%d %dkbps %@",
+                                           channel.viewerCountValue,
+                                           channel.relayCountValue,
+                                           channel.bitrateValue,
+                                           channel.format];
             view.yellowPageNameLabel.stringValue = channel.yellowPageName;
             
             NSImage *starImage = [NSImage imageNamed:@"28-star"];
@@ -170,6 +188,9 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
                 ? [starImage hh_imageTintedWithColor:[NSColor yellowColor]]
                 : [starImage hh_imageTintedWithColor:[NSColor grayColor]]
                 ;
+            if (!channel.contactURLString || [channel.contactURLString isEqualToString:@""]) {
+                view.browserButton.alphaValue = 0;
+            }
             
             view.favoriteButton.target = self;
             view.favoriteButton.action = @selector(onFavoriteButtonPressed:);
@@ -193,6 +214,7 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
 
 - (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(NSInteger)rowIndex
 {
+    BOOL shouldSelectRow = NO;
     if (aTableView == self.tableView) {
         YPChannel *channel = self.arrangedChannels[rowIndex];
         [channel play];
@@ -210,9 +232,9 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
         }
         self.searchField.stringValue = @"";
         [self.tableView reloadData];
+        shouldSelectRow = YES;
     }
-    
-    return NO;
+    return shouldSelectRow;
 }
 
 - (IBAction)onPreferencesButtonPressed:(id)sender
@@ -302,6 +324,30 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
     NSSearchField *searchField = (NSSearchField *)[obj object];
     self.filteredChannels = [self filterChannels:[self baseChannels] ByKeywords:@[searchField.stringValue]];
     [self.tableView reloadData];
+}
+
+- (IBAction)onSegmentedControlPressed:(id)sender
+{
+    NSSegmentedControl *segmentedControl = (NSSegmentedControl *)sender;
+    switch (segmentedControl.selectedSegment) {
+        case 0: {
+            [self displayPreferences];
+            break;
+        }
+        case 1: {
+            [self fetchYellowPages:nil];
+            break;
+        }
+        default:
+            break;
+    }
+    
+}
+
+- (void)openWindow:(id)sender
+{
+    [self.window makeKeyAndOrderFront:nil];
+    [NSApp activateIgnoringOtherApps:YES];
 }
 
 @end

@@ -76,6 +76,7 @@
 		D605591117B94F6C0070C4AD /* YPIndexDotTxtRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPIndexDotTxtRequestOperation.m; sourceTree = "<group>"; };
 		D605591317B94FB30070C4AD /* YPYellowPagesClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPYellowPagesClient.h; sourceTree = "<group>"; };
 		D605591417B94FB30070C4AD /* YPYellowPagesClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPYellowPagesClient.m; sourceTree = "<group>"; };
+		D64031CC17BF280D00BD25C3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D6720EA817BA956700BC2677 /* YPChannelCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPChannelCellView.h; sourceTree = "<group>"; };
 		D6720EA917BA956700BC2677 /* YPChannelCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPChannelCellView.m; sourceTree = "<group>"; };
 		D6720EB317BAAAC100BC2677 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
@@ -155,6 +156,7 @@
 		D60558DB17B93D8F0070C4AD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D64031CC17BF280D00BD25C3 /* SystemConfiguration.framework */,
 				D60558DC17B93D8F0070C4AD /* Cocoa.framework */,
 				D60558FB17B93D8F0070C4AD /* XCTest.framework */,
 				D60558DE17B93D8F0070C4AD /* Other Frameworks */,

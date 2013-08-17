@@ -62,9 +62,9 @@ extern const struct YPChannelFetchedProperties {
 
 
 
-@property int64_t bitrateValue;
-- (int64_t)bitrateValue;
-- (void)setBitrateValue:(int64_t)value_;
+@property int16_t bitrateValue;
+- (int16_t)bitrateValue;
+- (void)setBitrateValue:(int16_t)value_;
 
 //- (BOOL)validateBitrate:(id*)value_ error:(NSError**)error_;
 
@@ -170,9 +170,9 @@ extern const struct YPChannelFetchedProperties {
 
 
 
-@property int64_t portValue;
-- (int64_t)portValue;
-- (void)setPortValue:(int64_t)value_;
+@property int16_t portValue;
+- (int16_t)portValue;
+- (void)setPortValue:(int16_t)value_;
 
 //- (BOOL)validatePort:(id*)value_ error:(NSError**)error_;
 
@@ -208,9 +208,9 @@ extern const struct YPChannelFetchedProperties {
 
 
 
-@property int64_t viewerCountValue;
-- (int64_t)viewerCountValue;
-- (void)setViewerCountValue:(int64_t)value_;
+@property int16_t viewerCountValue;
+- (int16_t)viewerCountValue;
+- (void)setViewerCountValue:(int16_t)value_;
 
 //- (BOOL)validateViewerCount:(id*)value_ error:(NSError**)error_;
 
@@ -241,8 +241,8 @@ extern const struct YPChannelFetchedProperties {
 - (NSNumber*)primitiveBitrate;
 - (void)setPrimitiveBitrate:(NSNumber*)value;
 
-- (int64_t)primitiveBitrateValue;
-- (void)setPrimitiveBitrateValue:(int64_t)value_;
+- (int16_t)primitiveBitrateValue;
+- (void)setPrimitiveBitrateValue:(int16_t)value_;
 
 
 
@@ -307,8 +307,8 @@ extern const struct YPChannelFetchedProperties {
 - (NSNumber*)primitivePort;
 - (void)setPrimitivePort:(NSNumber*)value;
 
-- (int64_t)primitivePortValue;
-- (void)setPrimitivePortValue:(int64_t)value_;
+- (int16_t)primitivePortValue;
+- (void)setPrimitivePortValue:(int16_t)value_;
 
 
 
@@ -331,8 +331,8 @@ extern const struct YPChannelFetchedProperties {
 - (NSNumber*)primitiveViewerCount;
 - (void)setPrimitiveViewerCount:(NSNumber*)value;
 
-- (int64_t)primitiveViewerCountValue;
-- (void)setPrimitiveViewerCountValue:(int64_t)value_;
+- (int16_t)primitiveViewerCountValue;
+- (void)setPrimitiveViewerCountValue:(int16_t)value_;
 
 
 

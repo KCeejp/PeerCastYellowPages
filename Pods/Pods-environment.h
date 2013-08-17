@@ -30,6 +30,12 @@
 #define COCOAPODS_VERSION_MINOR_CocoaLumberjack 6
 #define COCOAPODS_VERSION_PATCH_CocoaLumberjack 2
 
+// INAppStoreWindow
+#define COCOAPODS_POD_AVAILABLE_INAppStoreWindow
+#define COCOAPODS_VERSION_MAJOR_INAppStoreWindow 1
+#define COCOAPODS_VERSION_MINOR_INAppStoreWindow 2
+#define COCOAPODS_VERSION_PATCH_INAppStoreWindow 0
+
 // MASPreferences
 #define COCOAPODS_POD_AVAILABLE_MASPreferences
 #define COCOAPODS_VERSION_MAJOR_MASPreferences 1

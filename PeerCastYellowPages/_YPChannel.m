@@ -89,22 +89,22 @@ const struct YPChannelFetchedProperties YPChannelFetchedProperties = {
 
 
 
-- (int64_t)bitrateValue {
+- (int16_t)bitrateValue {
 	NSNumber *result = [self bitrate];
-	return [result longLongValue];
+	return [result shortValue];
 }
 
-- (void)setBitrateValue:(int64_t)value_ {
-	[self setBitrate:[NSNumber numberWithLongLong:value_]];
+- (void)setBitrateValue:(int16_t)value_ {
+	[self setBitrate:[NSNumber numberWithShort:value_]];
 }
 
-- (int64_t)primitiveBitrateValue {
+- (int16_t)primitiveBitrateValue {
 	NSNumber *result = [self primitiveBitrate];
-	return [result longLongValue];
+	return [result shortValue];
 }
 
-- (void)setPrimitiveBitrateValue:(int64_t)value_ {
-	[self setPrimitiveBitrate:[NSNumber numberWithLongLong:value_]];
+- (void)setPrimitiveBitrateValue:(int16_t)value_ {
+	[self setPrimitiveBitrate:[NSNumber numberWithShort:value_]];
 }
 
 
@@ -197,22 +197,22 @@ const struct YPChannelFetchedProperties YPChannelFetchedProperties = {
 
 
 
-- (int64_t)portValue {
+- (int16_t)portValue {
 	NSNumber *result = [self port];
-	return [result longLongValue];
+	return [result shortValue];
 }
 
-- (void)setPortValue:(int64_t)value_ {
-	[self setPort:[NSNumber numberWithLongLong:value_]];
+- (void)setPortValue:(int16_t)value_ {
+	[self setPort:[NSNumber numberWithShort:value_]];
 }
 
-- (int64_t)primitivePortValue {
+- (int16_t)primitivePortValue {
 	NSNumber *result = [self primitivePort];
-	return [result longLongValue];
+	return [result shortValue];
 }
 
-- (void)setPrimitivePortValue:(int64_t)value_ {
-	[self setPrimitivePort:[NSNumber numberWithLongLong:value_]];
+- (void)setPrimitivePortValue:(int16_t)value_ {
+	[self setPrimitivePort:[NSNumber numberWithShort:value_]];
 }
 
 
@@ -256,22 +256,22 @@ const struct YPChannelFetchedProperties YPChannelFetchedProperties = {
 
 
 
-- (int64_t)viewerCountValue {
+- (int16_t)viewerCountValue {
 	NSNumber *result = [self viewerCount];
-	return [result longLongValue];
+	return [result shortValue];
 }
 
-- (void)setViewerCountValue:(int64_t)value_ {
-	[self setViewerCount:[NSNumber numberWithLongLong:value_]];
+- (void)setViewerCountValue:(int16_t)value_ {
+	[self setViewerCount:[NSNumber numberWithShort:value_]];
 }
 
-- (int64_t)primitiveViewerCountValue {
+- (int16_t)primitiveViewerCountValue {
 	NSNumber *result = [self primitiveViewerCount];
-	return [result longLongValue];
+	return [result shortValue];
 }
 
-- (void)setPrimitiveViewerCountValue:(int64_t)value_ {
-	[self setPrimitiveViewerCount:[NSNumber numberWithLongLong:value_]];
+- (void)setPrimitiveViewerCountValue:(int16_t)value_ {
+	[self setPrimitiveViewerCount:[NSNumber numberWithShort:value_]];
 }
 
 
