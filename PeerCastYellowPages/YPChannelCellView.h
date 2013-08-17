@@ -19,5 +19,6 @@
 @property (weak) IBOutlet NSView *overlayView;
 @property (weak) IBOutlet NSButton *favoriteButton;
 @property (weak) IBOutlet NSButton *browserButton;
+@property (weak) IBOutlet NSButton *playButton;
 
 @end

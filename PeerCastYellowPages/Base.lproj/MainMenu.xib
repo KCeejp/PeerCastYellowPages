@@ -761,14 +761,14 @@
                                 <rect key="frame" x="71" y="0.0" width="279" height="459"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
-                                    <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="90" horizontalPageScroll="10" verticalLineScroll="90" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" scrollerKnobStyle="dark" translatesAutoresizingMaskIntoConstraints="NO" id="AgL-W7-TEA" customClass="RFOverlayScrollView">
+                                    <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" scrollerKnobStyle="dark" translatesAutoresizingMaskIntoConstraints="NO" id="AgL-W7-TEA" customClass="RFOverlayScrollView">
                                         <rect key="frame" x="0.0" y="0.0" width="279" height="459"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <clipView key="contentView" ambiguous="YES" misplaced="YES" copiesOnScroll="NO" id="90X-GX-sKB">
                                             <rect key="frame" x="0.0" y="0.0" width="279" height="459"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="88" rowSizeStyle="automatic" viewBased="YES" id="4sF-Z7-oq3">
+                                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="4sF-Z7-oq3">
                                                     <rect key="frame" x="0.0" y="0.0" width="282" height="459"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
@@ -840,6 +840,14 @@
                                                                                         <font key="font" metaFont="system"/>
                                                                                     </buttonCell>
                                                                                 </button>
+                                                                                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mBo-Kq-dNf">
+                                                                                    <rect key="frame" x="0.0" y="29" width="20" height="20"/>
+                                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="471-play2" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="nLF-22-Kll">
+                                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                                        <font key="font" metaFont="system"/>
+                                                                                    </buttonCell>
+                                                                                </button>
                                                                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ytL-NI-ASN">
                                                                                     <rect key="frame" x="0.0" y="58" width="20" height="20"/>
                                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -867,6 +875,7 @@
                                                                         <outlet property="favoriteButton" destination="ytL-NI-ASN" id="3rb-BG-C29"/>
                                                                         <outlet property="genreLabel" destination="SAr-7V-bpZ" id="fe3-vf-DFr"/>
                                                                         <outlet property="overlayView" destination="N4w-gF-fcd" id="5Eu-hJ-UxE"/>
+                                                                        <outlet property="playButton" destination="mBo-Kq-dNf" id="YOQ-oO-U6A"/>
                                                                         <outlet property="titleLabel" destination="NmU-Ep-3H3" id="nU2-5w-SJs"/>
                                                                         <outlet property="yellowPageNameLabel" destination="qnI-bL-N9k" id="Nvn-W2-Ev9"/>
                                                                     </connections>
@@ -953,7 +962,9 @@
                 <webView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bSA-qm-q5w">
                     <rect key="frame" x="0.0" y="20" width="320" height="440"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <webPreferences key="preferences" defaultFontSize="12" defaultFixedFontSize="12"/>
+                    <webPreferences key="preferences" defaultFontSize="12" defaultFixedFontSize="12">
+                        <nil key="identifier"/>
+                    </webPreferences>
                 </webView>
                 <segmentedControl verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H7B-72-BHp">
                     <rect key="frame" x="0.0" y="-1" width="320" height="23"/>
@@ -1004,6 +1015,7 @@
     <resources>
         <image name="28-star" width="26" height="26"/>
         <image name="401-globe" width="28" height="28"/>
+        <image name="471-play2" width="28" height="28"/>
         <image name="NSActionTemplate" width="15" height="15"/>
         <image name="NSGoLeftTemplate" width="9" height="9"/>
         <image name="NSGoRightTemplate" width="9" height="9"/>

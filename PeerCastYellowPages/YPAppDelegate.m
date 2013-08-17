@@ -191,9 +191,14 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
                 ? [starImage hh_imageTintedWithColor:[NSColor yellowColor]]
                 : [starImage hh_imageTintedWithColor:[NSColor grayColor]]
                 ;
+            view.playButton.image = [view.playButton.image hh_imageTintedWithColor:[NSColor redColor]];
+            
             if (!channel.contactURLString || [channel.contactURLString isEqualToString:@""]) {
                 view.browserButton.alphaValue = 0;
             }
+            
+            view.playButton.target = self;
+            view.playButton.action = @selector(onPlayButtonPressed:);
             
             view.favoriteButton.target = self;
             view.favoriteButton.action = @selector(onFavoriteButtonPressed:);
@@ -254,6 +259,13 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
 - (void)displayPreferences
 {
     [self.preferencesWindowController showWindow:nil];
+}
+
+- (void)onPlayButtonPressed:(id)sender
+{
+    NSInteger row = [self indexForEvent]; // or use tag on button, maybe?
+    YPChannel *channel = self.arrangedChannels[row];
+    [channel play];
 }
 
 - (void)onFavoriteButtonPressed:(id)sender
