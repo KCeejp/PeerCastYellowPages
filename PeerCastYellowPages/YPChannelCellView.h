@@ -16,9 +16,7 @@
 @property (weak) IBOutlet NSTextField *yellowPageNameLabel;
 @property (weak) IBOutlet NSTextField *genreLabel;
 
-@property (weak) IBOutlet NSView *overlayView;
 @property (weak) IBOutlet NSButton *favoriteButton;
-@property (weak) IBOutlet NSButton *browserButton;
 @property (weak) IBOutlet NSButton *playButton;
 
 @end

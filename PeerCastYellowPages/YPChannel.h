@@ -6,6 +6,8 @@
 - (NSString *)host;
 - (NSURL *)plsURL;
 - (NSURL *)streamURL;
+- (NSURL *)streamURLMMS;
+- (NSURL *)streamURLMMSH;
 
 - (void)play;
 - (void)openContactURLInBrowser;
@@ -13,9 +15,9 @@
 
 @property (nonatomic) NSURL *contactURL;
 @property (nonatomic) NSURL *yellowPageURL;
-@property (nonatomic, copy) NSString *yellowPageName;
+@property (nonatomic, copy, readonly) NSString *yellowPageName;
 
-@property (nonatomic) YPFavorite *favorite;
+@property (nonatomic, readonly) YPFavorite *favorite;
 - (void)toggleFavorite;
 
 @end

@@ -1,5 +1,6 @@
 #import "GTMNSString+HTML.h"
 #import "CHCSVParser.h"
+#import "YPCache.h"
 
 @interface YPChannel ()
 
@@ -24,6 +25,16 @@
 - (NSURL *)streamURL
 {
     return [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:%lu/stream/%@.%@", [YPSettings sharedSettings].peerCastHost, (unsigned long)[YPSettings sharedSettings].peerCastPort, self.identifier, [self.format lowercaseString]]];
+}
+
+- (NSURL *)streamURLMMS
+{
+    return [NSURL URLWithString:[NSString stringWithFormat:@"mms://%@:%lu/stream/%@.%@", [YPSettings sharedSettings].peerCastHost, (unsigned long)[YPSettings sharedSettings].peerCastPort, self.identifier, [self.format lowercaseString]]];
+}
+
+- (NSURL *)streamURLMMSH
+{
+    return [NSURL URLWithString:[NSString stringWithFormat:@"mmsh://%@:%lu/stream/%@.%@", [YPSettings sharedSettings].peerCastHost, (unsigned long)[YPSettings sharedSettings].peerCastPort, self.identifier, [self.format lowercaseString]]];
 }
 
 - (NSString *)name
@@ -60,8 +71,15 @@
 
 - (NSString *)yellowPageName
 {
-    YPYellowPage *yellowPage = [YPYellowPage MR_findFirstByAttribute:@"indexDotTxtURLString" withValue:self.yellowPageURLString];
-    return yellowPage.name;
+    NSString *key = [NSString stringWithFormat:@"yp:name:%@", self.yellowPageURLString];
+    NSString *yellowPageName = [[YPCache sharedCache] objectForKey:key];
+    if (!yellowPageName) {
+        YPYellowPage *yellowPage = [YPYellowPage MR_findFirstByAttribute:@"indexDotTxtURLString" withValue:self.yellowPageURLString];
+        yellowPageName = yellowPage.name;
+        
+        [[YPCache sharedCache] setObject:yellowPageName forKey:key];
+    }
+    return yellowPageName;
 }
 
 #pragma mark -
@@ -70,7 +88,7 @@
 {
     NSArray *commands = [self parsePlayerCommand];
     NSTask *task = [NSTask launchedTaskWithLaunchPath:commands[0] arguments:[commands objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, commands.count - 1)]]];
-    [task waitUntilExit];
+    // [task waitUntilExit];
     
     NSUserNotification *notification = [[NSUserNotification alloc] init];
     notification.title = @"Now Playing...";
@@ -92,10 +110,16 @@
     for (NSString *string in strings) {
         NSString *command;
         if ([string isEqualToString:YPPlaceholderForPlaylistURL]) {
-            command = [self.streamURL absoluteString];
+            command = [self.plsURL absoluteString];
         }
         else if ([string isEqualToString:YPPlaceholderForStreamURL]) {
             command = [self.streamURL absoluteString];
+        }
+        else if ([string isEqualToString:YPPlaceholderForStreamURLMMS]) {
+            command = [self.streamURLMMS absoluteString];
+        }
+        else if ([string isEqualToString:YPPlaceholderForStreamURLMMSH]) {
+            command = [self.streamURLMMSH absoluteString];
         }
         else {
             command = string;

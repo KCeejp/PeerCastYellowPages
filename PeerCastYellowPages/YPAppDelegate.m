@@ -187,24 +187,20 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
             view.yellowPageNameLabel.stringValue = channel.yellowPageName;
             
             NSImage *starImage = [NSImage imageNamed:@"28-star"];
+            view.favoriteButton.image = starImage;
+            /*
             view.favoriteButton.image = (channel.favorite)
                 ? [starImage hh_imageTintedWithColor:[NSColor yellowColor]]
                 : [starImage hh_imageTintedWithColor:[NSColor grayColor]]
                 ;
             view.playButton.image = [view.playButton.image hh_imageTintedWithColor:[NSColor redColor]];
-            
-            if (!channel.contactURLString || [channel.contactURLString isEqualToString:@""]) {
-                view.browserButton.alphaValue = 0;
-            }
-            
-            view.playButton.target = self;
-            view.playButton.action = @selector(onPlayButtonPressed:);
+            */
             
             view.favoriteButton.target = self;
             view.favoriteButton.action = @selector(onFavoriteButtonPressed:);
             
-            view.browserButton.target = self;
-            view.browserButton.action = @selector(onBrowserButtonPressed:);
+            view.playButton.target = self;
+            view.playButton.action = @selector(onPlayButtonPressed:);
         }
         
         return view;
@@ -421,6 +417,45 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
 - (NSSize)drawerWillResizeContents:(NSDrawer *)sender toSize:(NSSize)contentSize
 {
     return [sender contentSize];
+}
+
+#pragma mark - Contextual Menu
+
+- (IBAction)onContextualMenuPlayPressed:(id)sender
+{
+    NSUInteger row = [self.tableView clickedRow];
+    YPChannel *channel = self.arrangedChannels[row];
+    [channel play];
+}
+
+- (IBAction)onContextualMenuOpenContactURLPressed:(id)sender
+{
+    NSUInteger row = [self.tableView clickedRow];
+    YPChannel *channel = self.arrangedChannels[row];
+    [channel openContactURLInBrowser];
+}
+
+- (IBAction)onContextualMenuFavoritePressed:(id)sender
+{
+    NSUInteger row = [self.tableView clickedRow];
+    YPChannel *channel = self.arrangedChannels[row];
+    [channel toggleFavorite];
+}
+
+#pragma mark - NSMenuDelegate
+
+- (void)menuNeedsUpdate:(NSMenu *)menu
+{
+    NSMenuItem *menuItem = menu.itemArray[3];
+    
+    NSUInteger row = [self.tableView clickedRow];
+    YPChannel *channel = self.arrangedChannels[row];
+    if (channel.favorite) {
+        menuItem.title = @"Remove from Favorite";
+    }
+    else {
+        menuItem.title = @"Add to Favorite";
+    }
 }
 
 @end

@@ -35,7 +35,7 @@
         
         NSString *identifier = elements[1];
         YPChannel *channel = [YPChannel MR_findFirstByAttribute:@"identifier" withValue:identifier];
-        if (channel) {
+        if (channel && ![channel.identifier isEqualToString:YPAnnouncementIdentifier]) {
             channel.newValue = NO;
         }
         else {

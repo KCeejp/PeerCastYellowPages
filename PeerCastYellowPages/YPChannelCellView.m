@@ -20,10 +20,11 @@
 {
     [super awakeFromNib];
     
-    self.overlayView.alphaValue = 0.f;
-    
+    self.playButton.alphaValue = 0.f;
+    /*
     self.favoriteButton.image = [self.favoriteButton.image hh_imageTintedWithColor:[NSColor grayColor]];
     self.browserButton.image = [self.browserButton.image hh_imageTintedWithColor:[NSColor grayColor]];
+    */
 }
 
 - (void)viewDidMoveToWindow
@@ -45,14 +46,14 @@
 {
     [super mouseEntered:theEvent];
     
-    self.overlayView.alphaValue = 1.f;
+    self.playButton.alphaValue = 1.f;
 }
 
 - (void)mouseExited:(NSEvent *)theEvent
 {
     [super mouseExited:theEvent];
     
-    self.overlayView.alphaValue = 0.f;
+    self.playButton.alphaValue = 0.f;
 }
 
 @end

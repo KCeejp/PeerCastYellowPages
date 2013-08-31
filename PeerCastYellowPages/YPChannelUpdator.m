@@ -11,6 +11,7 @@
 #import "YPYellowPagesClient.h"
 #import "YPYellowPage.h"
 
+
 @implementation YPChannelUpdator
 
 + (YPChannelUpdator *)sharedUpdator
@@ -46,6 +47,8 @@
     [sharedClient enqueueBatchOfHTTPRequestOperations:operations progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
     } completionBlock:^(NSArray *operations) {
         
+        [weakSelf deleteAllAnnouncement];
+        
         NSMutableArray *channels = @[].mutableCopy;
         for (AFHTTPRequestOperation *operation in operations) {
             
@@ -67,6 +70,12 @@
     return [channels sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         return [(YPChannel *)obj1 viewerCountValue] < [(YPChannel *)obj2 viewerCountValue];
     }];
+}
+
+- (void)deleteAllAnnouncement
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"identifier == %@", YPAnnouncementIdentifier];
+    [YPChannel MR_deleteAllMatchingPredicate:predicate];
 }
 
 - (void)deleteDisappearedChannels:(NSArray *)channels

@@ -42,6 +42,8 @@ static NSString * const YPSettingsPlayerCommand = @"YPSettingsPlayerCommand";
     self.peerCastPort = 7144;
     self.refreshInterval = 2 * 60;
     self.playerCommand = [NSString stringWithFormat:@"/usr/bin/open -a \"/Applications/Flip Player.app\" %@", YPPlaceholderForPlaylistURL];
+    self.playerCommand = [NSString stringWithFormat:@"/Applications/MPlayerX.app/Contents/Resources/binaries/x86_64/mplayer -loop 0 -playlist %@", YPPlaceholderForPlaylistURL];
+    self.playerCommand = [NSString stringWithFormat:@"\"/Applications/VLC.app/Contents/MacOS/VLC\" %@", YPPlaceholderForStreamURLMMSH];
     
     [self initializeYellowPages];
     

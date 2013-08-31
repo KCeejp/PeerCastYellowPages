@@ -14,3 +14,7 @@ static NSString * const YPNotificationDidResetSettings = @"YPNotificationDidRese
 
 static NSString * const YPPlaceholderForPlaylistURL = @"%{PLAYLIST_URL}";
 static NSString * const YPPlaceholderForStreamURL = @"%{STREAM_URL}";
+static NSString * const YPPlaceholderForStreamURLMMS = @"%{STREAM_URL_MMS}";
+static NSString * const YPPlaceholderForStreamURLMMSH = @"%{STREAM_URL_MMSH}";
+
+static NSString * const YPAnnouncementIdentifier = @"00000000000000000000000000000000";

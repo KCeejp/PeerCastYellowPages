@@ -40,6 +40,7 @@
 		D6720EEC17BD024300BC2677 /* YPSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = D6720EEB17BD024300BC2677 /* YPSettings.m */; };
 		D6720EF317BD579F00BC2677 /* YPPlayerPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6720EF117BD579F00BC2677 /* YPPlayerPreferencesViewController.m */; };
 		D6720EF417BD579F00BC2677 /* YPPlayerPreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6720EF217BD579F00BC2677 /* YPPlayerPreferencesViewController.xib */; };
+		D699F78417D0F04700E4CB36 /* YPCache.m in Sources */ = {isa = PBXBuildFile; fileRef = D699F78317D0F04700E4CB36 /* YPCache.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +113,8 @@
 		D6720EF117BD579F00BC2677 /* YPPlayerPreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPPlayerPreferencesViewController.m; sourceTree = "<group>"; };
 		D6720EF217BD579F00BC2677 /* YPPlayerPreferencesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YPPlayerPreferencesViewController.xib; sourceTree = "<group>"; };
 		D6720EF517BEE30E00BC2677 /* YPConfigurations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPConfigurations.h; sourceTree = "<group>"; };
+		D699F78217D0F04700E4CB36 /* YPCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPCache.h; sourceTree = "<group>"; };
+		D699F78317D0F04700E4CB36 /* YPCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPCache.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -240,6 +243,8 @@
 				D605591417B94FB30070C4AD /* YPYellowPagesClient.m */,
 				D6720EEA17BD024300BC2677 /* YPSettings.h */,
 				D6720EEB17BD024300BC2677 /* YPSettings.m */,
+				D699F78217D0F04700E4CB36 /* YPCache.h */,
+				D699F78317D0F04700E4CB36 /* YPCache.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -451,6 +456,7 @@
 				D6720EBA17BBDD5700BC2677 /* Model.xcdatamodeld in Sources */,
 				D6720EAA17BA956700BC2677 /* YPChannelCellView.m in Sources */,
 				D60558E917B93D8F0070C4AD /* main.m in Sources */,
+				D699F78417D0F04700E4CB36 /* YPCache.m in Sources */,
 				D6720EF317BD579F00BC2677 /* YPPlayerPreferencesViewController.m in Sources */,
 				D60558F017B93D8F0070C4AD /* YPAppDelegate.m in Sources */,
 				D6720EB617BAAAC100BC2677 /* GTMNSString+HTML.m in Sources */,
