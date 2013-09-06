@@ -318,8 +318,8 @@
     self.temporaryFilename = [self generateFilename];
     NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock: ^{
         [self startRecievingInMPlayerX];
-        NSString *playerCommand = [NSString stringWithFormat:@"/Applications/MPlayerX.app/Contents/Resources/binaries/x86_64/mplayer -slave -dumpstream -dumpfile %@ %@",
-                                   [self temporaryFilename],
+        NSString *playerCommand = [NSString stringWithFormat:@"/Applications/MPlayerX.app/Contents/Resources/binaries/x86_64/mplayer -slave -dumpstream -dumpfile \"%@\" %@",
+                                   [self defaultSavingPath],
                                    [self.streamURLMMSH absoluteString]
                                    ];
         NSArray *commands = [self commandArrayFromPlayerCommand:playerCommand];
@@ -338,9 +338,9 @@
     self.temporaryFilename = [self generateFilename];
     NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock: ^{
         [self startRecievingInMPlayerX];
-        NSString *playerCommand = [NSString stringWithFormat:@"/Applications/VLC.app/Contents/MacOS/VLC %@ --sout=file/wmv:%@",
+        NSString *playerCommand = [NSString stringWithFormat:@"/Applications/VLC.app/Contents/MacOS/VLC %@ --sout=file/wmv:\"%@\"",
                                    [self.streamURLMMSH absoluteString],
-                                   [self temporaryFilename]
+                                   [self defaultSavingPath]
                                    ];
         NSArray *commands = [self commandArrayFromPlayerCommand:playerCommand];
         self.recordingTask = [self executePlayerCommand:commands];
@@ -365,9 +365,9 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error;
     
-    if ([fileManager fileExistsAtPath:[self defaultSavingPath]]) {
+    NSURL *fromURL = [NSURL fileURLWithPath:[self defaultSavingPath]];
+    if ([fileManager fileExistsAtPath:[fromURL path]]) {
         
-        NSURL *fromURL = [NSURL fileURLWithPath:[self defaultSavingPath]];
         NSURL *toURL  = [[[fileManager URLsForDirectory:NSMoviesDirectory inDomains:NSUserDomainMask] lastObject] URLByAppendingPathComponent:[self filename]];
         [fileManager moveItemAtURL:fromURL toURL:toURL error:&error];
         self.temporaryFilename = nil;
@@ -385,9 +385,8 @@
 
 - (NSString *)defaultSavingPath
 {
-    NSString *currentpath = [[[[NSBundle mainBundle] bundlePath] stringByDeletingPathExtension] stringByDeletingLastPathComponent];
-    NSURL *currentURL = [NSURL URLWithString:currentpath];
-    return [[currentURL URLByAppendingPathComponent:[self temporaryFilename]] absoluteString];
+    NSString *applicationSupportDirectoryPath = [self applicationSupportDirectory];
+    return [NSString stringWithFormat:@"%@/%@", applicationSupportDirectoryPath, [self temporaryFilename]];
 }
 
 - (NSString *)filename
@@ -396,6 +395,61 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] initWithDateFormat:@"%Y_%m_%d_%H_%M_%S" allowNaturalLanguage:YES];
     NSString *dateString = [dateFormatter stringFromDate:date];
     return [NSString stringWithFormat:@"%@_%@.wmv", self.name, dateString];
+}
+
+- (NSString *)findOrCreateDirectory:(NSSearchPathDirectory)searchPathDirectory
+                           inDomain:(NSSearchPathDomainMask)domainMask
+                appendPathComponent:(NSString *)appendComponent
+                              error:(NSError **)errorOut
+{
+    // Search for the path
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(searchPathDirectory, domainMask, YES);
+    if ([paths count] == 0) {
+        // *** creation and return of error object omitted for space
+        return nil;
+    }
+    
+    // Normally only need the first path
+    NSString *resolvedPath = [paths objectAtIndex:0];
+    
+    if (appendComponent) {
+        resolvedPath = [resolvedPath stringByAppendingPathComponent:appendComponent];
+    }
+    
+    // Create the path if it doesn't exist
+    NSError *error;
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL success = [fileManager createDirectoryAtPath:resolvedPath
+                          withIntermediateDirectories:YES
+                                           attributes:nil
+                                                error:&error];
+    if (!success) {
+        if (errorOut) {
+            *errorOut = error;
+        }
+        return nil;
+    }
+    
+    // If we've made it this far, we have a success
+    if (errorOut) {
+        *errorOut = nil;
+    }
+    return resolvedPath;
+}
+
+- (NSString *)applicationSupportDirectory
+{
+    NSString *executableName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleExecutable"];
+    NSError *error;
+    NSString *result = [self findOrCreateDirectory:NSApplicationSupportDirectory
+                                          inDomain:NSUserDomainMask
+                               appendPathComponent:executableName
+                                             error:&error];
+    if (error) {
+        NSLog(@"Unable to find or create application support directory:\n%@", error);
+    }
+    return result;
 }
 
 @end
