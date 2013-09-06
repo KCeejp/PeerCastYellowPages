@@ -7,6 +7,7 @@ PODS:
   - INAppStoreWindow (1.2)
   - MagicalRecord (2.1)
   - MASPreferences (1.0)
+  - MGScopeBar (0.0.1)
   - NSImage-HHTint (0.0.1)
   - OBMenuBarWindow (1.0.0)
   - RFOverlayScrollView (0.1)
@@ -20,12 +21,15 @@ DEPENDENCIES:
   - INAppStoreWindow
   - MagicalRecord
   - MASPreferences
+  - MGScopeBar (from `https://gist.github.com/KCeejp/1f6f390ce4c1747c26ca/raw/78fb629f1a42100eb83d0c462d9f6b712f602e61/MGScopeBar.podspec:`)
   - NSImage-HHTint (from `https://gist.github.com/KCeejp/0b9dfa8f61152e138d8c/raw/85461164d39ace2d6c86cc4f0766f898c90d85fe/NSImage-HHTint.podspec`)
   - OBMenuBarWindow (~> 1.0.0)
   - RFOverlayScrollView
   - STPrivilegedTask (from `https://gist.github.com/KCeejp/1811b971d82500cc223b/raw/fe4ccd3f5b6e7bd23db9d92d74214bae0ca3223b/STPrivilegedTask.podspec`)
 
 EXTERNAL SOURCES:
+  MGScopeBar:
+    :podspec: https://gist.github.com/KCeejp/1f6f390ce4c1747c26ca/raw/78fb629f1a42100eb83d0c462d9f6b712f602e61/MGScopeBar.podspec:
   NSImage-HHTint:
     :podspec: https://gist.github.com/KCeejp/0b9dfa8f61152e138d8c/raw/85461164d39ace2d6c86cc4f0766f898c90d85fe/NSImage-HHTint.podspec
   STPrivilegedTask:
@@ -39,6 +43,7 @@ SPEC CHECKSUMS:
   INAppStoreWindow: d00327caee47d951043169df9aaab952389defcb
   MagicalRecord: 64e7184c240087a45e9588a722eaf05b0ad837f7
   MASPreferences: b8c112b4b6e6cbd32b8f49d249eb152d1eeb38f8
+  MGScopeBar: f0cb7c71bd5fc210d40b7c40d6c58397e35e83b7
   NSImage-HHTint: d825780d0692a7b29b322d88402f56701d6828d2
   OBMenuBarWindow: ca509046488b1ab5967d4e3b1df88250a423631c
   RFOverlayScrollView: c24fab831435320ebb17ead76ffd6e8b9e42704e

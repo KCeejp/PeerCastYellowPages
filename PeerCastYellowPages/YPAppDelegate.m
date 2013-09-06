@@ -10,6 +10,7 @@
 
 #import <WebKit/WebKit.h>
 #import "YPChannelUpdator.h"
+#import "MGScopeBar.h"
 
 // Views
 #import "YPChannelCellView.h"
@@ -25,7 +26,7 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
     YPTableViewTypePopular,
 };
 
-@interface YPAppDelegate () <NSUserNotificationCenterDelegate>
+@interface YPAppDelegate () <NSUserNotificationCenterDelegate, MGScopeBarDelegate>
 
 @property (nonatomic) NSStatusItem *statusItem;
 
@@ -35,6 +36,7 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
 @property (nonatomic) NSArray *filteredChannels;
 
 @property (nonatomic) NSArray *menuArray;
+@property (nonatomic) NSArray *yellowPages;
 
 @property (nonatomic) MASPreferencesWindowController *preferencesWindowController;
 
@@ -100,6 +102,13 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
     [self.menuTableView selectRowIndexes:indexSet byExtendingSelection:NO];
     
     [self.webView setCustomUserAgent:@"Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3"];
+    
+    NSMutableArray *mutableArray = [[[YPYellowPage MR_findAll] map:^id(id obj) {
+        return [(YPYellowPage *)obj name];
+    }] mutableCopy];
+    [mutableArray insertObject:YPScopeBarAllIdentifier atIndex:0];
+    self.yellowPages = mutableArray;
+    self.scopeBar.delegate = self;
 }
 
 - (void)resetRefreshTimer
@@ -235,7 +244,20 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
             default:
                 break;
         }
+        
         self.searchField.stringValue = @"";
+        
+        for (int i=0; i < self.scopeBar.selectedItems.count; i++) {
+            NSArray *array = self.scopeBar.selectedItems[i];
+            for (int j=0; j < array.count; j++) {
+                NSString *identifier = array[j];
+                [self.scopeBar setSelected:NO forItem:identifier inGroup:i];
+            }
+        }
+        
+        [self.scopeBar setSelected:YES forItem:YPScopeBarAllIdentifier inGroup:0];
+        
+        self.filteredChannels = [self applyFilter];
         [self.tableView reloadData];
         shouldSelectRow = YES;
     }
@@ -289,7 +311,7 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
 - (NSArray *)arrangedChannels
 {
     NSArray *arrangedChannels;
-    if (![self.searchField.stringValue isEqualToString:@""]) {
+    if (![self.searchField.stringValue isEqualToString:@""] || ![self isScopeShowAll]) {
         arrangedChannels = self.filteredChannels;
     }
     else {
@@ -323,6 +345,10 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
 
 - (NSArray *)filterChannels:(NSArray *)channels byKeywords:(NSArray *)keywords
 {
+    if (!keywords || (keywords.count == 1 && [[keywords lastObject] isEqualToString:@""])) {
+        return channels;
+    }
+    
     NSMutableArray *predicates = @[].mutableCopy;
     for (NSString *keyword in keywords) {
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.name CONTAINS[cd] %@ || self.detail CONTAINS[cd] %@ || self.genre CONTAINS[cd] %@", keyword, keyword, keyword];
@@ -333,8 +359,7 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
 
 - (void)controlTextDidChange:(NSNotification *)obj
 {
-    NSSearchField *searchField = (NSSearchField *)[obj object];
-    self.filteredChannels = [self filterChannels:[self baseChannels] byKeywords:@[searchField.stringValue]];
+    self.filteredChannels = [self applyFilter];
     [self.tableView reloadData];
 }
 
@@ -530,6 +555,81 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
     else {
         menuItem.title = @"Add to Favorite";
     }
+}
+
+#pragma mark - MGScopeBarDelegate
+
+- (int)numberOfGroupsInScopeBar:(MGScopeBar *)theScopeBar
+{
+    return 1;
+}
+
+- (NSArray *)scopeBar:(MGScopeBar *)theScopeBar itemIdentifiersForGroup:(int)groupNumber
+{
+    return self.yellowPages;
+}
+
+- (NSString *)scopeBar:(MGScopeBar *)theScopeBar labelForGroup:(int)groupNumber
+{
+    return @"YP:";
+}
+
+- (MGScopeBarGroupSelectionMode)scopeBar:(MGScopeBar *)theScopeBar selectionModeForGroup:(int)groupNumber
+{
+    return MGRadioSelectionMode;
+}
+
+- (NSString *)scopeBar:(MGScopeBar *)theScopeBar titleOfItem:(NSString *)identifier inGroup:(int)groupNumber
+{
+    if ([identifier isEqualToString:YPScopeBarAllIdentifier]) {
+        identifier = @"All";
+    }
+    return identifier;
+}
+
+- (void)scopeBar:(MGScopeBar *)theScopeBar selectedStateChanged:(BOOL)selected forItem:(NSString *)identifier inGroup:(int)groupNumber
+{
+    self.filteredChannels = [self applyFilter];
+    [self.tableView reloadData];
+}
+
+- (BOOL)isScopeShowAll
+{
+    return [[self identifierForSelectedScope] isEqualToString:YPScopeBarAllIdentifier];
+}
+
+- (NSArray *)filterChannels:(NSArray *)channels byYellowPageName:(NSString *)yellowPageName
+{
+    BOOL isShowAll = [self isScopeShowAll];
+    
+    NSArray *filteredChannels = ({
+        NSArray *array;
+        if (isShowAll) {
+            array = channels;
+        }
+        else {
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.yellowPageName CONTAINS[cd] %@", yellowPageName];
+            array = [channels filteredArrayUsingPredicate:predicate];
+        }
+        array;
+    });
+    return filteredChannels;
+}
+
+- (NSString *)identifierForSelectedScope
+{
+    NSString *identifier = [[self.scopeBar.selectedItems lastObject] lastObject];
+    return (identifier) ? identifier : @"";
+}
+
+- (NSArray *)applyFilter
+{
+    NSArray *filteredArray = self.baseChannels;
+    
+    filteredArray = [self filterChannels:filteredArray byKeywords:@[self.searchField.stringValue]];
+    filteredArray = [self filterChannels:filteredArray byYellowPageName:[self identifierForSelectedScope]];
+    
+    return filteredArray;
 }
 
 @end

@@ -761,15 +761,19 @@
                                 <rect key="frame" x="71" y="0.0" width="279" height="459"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
-                                    <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" scrollerKnobStyle="dark" translatesAutoresizingMaskIntoConstraints="NO" id="AgL-W7-TEA">
-                                        <rect key="frame" x="0.0" y="0.0" width="279" height="459"/>
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UGW-7C-XcS" customClass="MGScopeBar">
+                                        <rect key="frame" x="0.0" y="434" width="279" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    </customView>
+                                    <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="90" horizontalPageScroll="10" verticalLineScroll="90" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" scrollerKnobStyle="dark" translatesAutoresizingMaskIntoConstraints="NO" id="AgL-W7-TEA">
+                                        <rect key="frame" x="0.0" y="0.0" width="279" height="434"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <clipView key="contentView" ambiguous="YES" misplaced="YES" copiesOnScroll="NO" id="90X-GX-sKB">
-                                            <rect key="frame" x="0.0" y="0.0" width="279" height="459"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="279" height="434"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="4sF-Z7-oq3">
-                                                    <rect key="frame" x="0.0" y="0.0" width="282" height="459"/>
+                                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="88" rowSizeStyle="automatic" viewBased="YES" id="4sF-Z7-oq3">
+                                                    <rect key="frame" x="0.0" y="0.0" width="282" height="434"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -931,6 +935,8 @@
                 <outlet property="menuArrayController" destination="Hn4-rU-E5F" id="Uap-iO-9ZM"/>
                 <outlet property="menuTableView" destination="ICe-hZ-vFp" id="zkT-6a-eCc"/>
                 <outlet property="playButton" destination="sZD-AZ-ZMq" id="SZd-mF-zyw"/>
+                <outlet property="rightPaneView" destination="pLA-Ri-RgP" id="zgf-C1-4TQ"/>
+                <outlet property="scopeBar" destination="UGW-7C-XcS" id="hFN-hM-q35"/>
                 <outlet property="scrollView" destination="AgL-W7-TEA" id="3Ja-bn-TSb"/>
                 <outlet property="searchField" destination="BaB-LJ-Rid" id="Kx5-Ak-JCR"/>
                 <outlet property="tableView" destination="4sF-Z7-oq3" id="mDe-sE-QZV"/>

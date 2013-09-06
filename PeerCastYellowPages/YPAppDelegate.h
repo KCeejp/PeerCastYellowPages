@@ -10,7 +10,7 @@
 
 #import "INAppStoreWindow.h"
 
-@class WebView;
+@class WebView, MGScopeBar;
 
 @interface YPAppDelegate : NSObject <NSApplicationDelegate>
 
@@ -26,5 +26,7 @@
 @property (weak) IBOutlet NSDrawer *drawer;
 @property (weak) IBOutlet NSView *drawerView;
 @property (weak) IBOutlet WebView *webView;
+@property (weak) IBOutlet NSView *rightPaneView;
+@property (weak) IBOutlet MGScopeBar *scopeBar;
 
 @end

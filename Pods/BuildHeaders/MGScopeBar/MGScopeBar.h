@@ -1,0 +1,1 @@
+../../MGScopeBar/MGScopeBar.h

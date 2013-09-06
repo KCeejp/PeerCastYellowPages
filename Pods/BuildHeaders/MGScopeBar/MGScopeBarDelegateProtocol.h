@@ -1,0 +1,1 @@
+../../MGScopeBar/MGScopeBarDelegateProtocol.h

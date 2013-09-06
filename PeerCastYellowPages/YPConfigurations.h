@@ -18,3 +18,5 @@ static NSString * const YPPlaceholderForStreamURLMMS = @"%{STREAM_URL_MMS}";
 static NSString * const YPPlaceholderForStreamURLMMSH = @"%{STREAM_URL_MMSH}";
 
 static NSString * const YPAnnouncementIdentifier = @"00000000000000000000000000000000";
+
+static NSString * const YPScopeBarAllIdentifier = @"__ALL";

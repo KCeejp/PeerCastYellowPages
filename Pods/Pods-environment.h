@@ -42,6 +42,12 @@
 #define COCOAPODS_VERSION_MINOR_MASPreferences 0
 #define COCOAPODS_VERSION_PATCH_MASPreferences 0
 
+// MGScopeBar
+#define COCOAPODS_POD_AVAILABLE_MGScopeBar
+#define COCOAPODS_VERSION_MAJOR_MGScopeBar 0
+#define COCOAPODS_VERSION_MINOR_MGScopeBar 0
+#define COCOAPODS_VERSION_PATCH_MGScopeBar 1
+
 // MagicalRecord
 #define COCOAPODS_POD_AVAILABLE_MagicalRecord
 #define COCOAPODS_VERSION_MAJOR_MagicalRecord 2

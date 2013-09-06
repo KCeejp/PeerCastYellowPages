@@ -13,3 +13,4 @@ pod 'NSImage-HHTint', :podspec => 'https://gist.github.com/KCeejp/0b9dfa8f61152e
 pod 'CHCSVParser'
 pod 'INAppStoreWindow'
 pod 'STPrivilegedTask', :podspec => 'https://gist.github.com/KCeejp/1811b971d82500cc223b/raw/fe4ccd3f5b6e7bd23db9d92d74214bae0ca3223b/STPrivilegedTask.podspec'
+pod 'MGScopeBar', :podspec => 'https://gist.github.com/KCeejp/1f6f390ce4c1747c26ca/raw/78fb629f1a42100eb83d0c462d9f6b712f602e61/MGScopeBar.podspec:'
