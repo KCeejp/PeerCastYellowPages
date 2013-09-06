@@ -1,6 +1,7 @@
 #import "GTMNSString+HTML.h"
 #import "CHCSVParser.h"
 #import "YPCache.h"
+#import "STPrivilegedTask.h"
 
 @interface YPChannel ()
 
@@ -82,59 +83,52 @@
     return yellowPageName;
 }
 
+- (NSURL *)yellowPageSiteURLForChannel
+{
+    NSDictionary *dict = @{@"find":self.name};
+    NSString *URLString = [[NSString alloc] initWithFormat:@"%@%@%@",
+                           [self.yellowPageSiteURL absoluteString],
+                           [self.yellowPageSiteURL query] ? @"&" : @"?", [self buildQueryFromDictionary:dict]];
+    NSURL *URL = [NSURL URLWithString:URLString];
+    return URL;
+}
+
+- (NSURL *)yellowPageSiteURL
+{
+    return [self.yellowPageURL URLByDeletingLastPathComponent];
+}
+
+- (NSString *)buildQueryFromDictionary:(NSDictionary *)dictionary
+{
+    NSMutableArray *array = @[].mutableCopy;
+    for (NSString *key in [dictionary allKeys]) {
+        NSString *kv = ({
+            NSString *value = [dictionary objectForKey:key];
+            NSArray *array = @[
+                               [key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
+                               [value stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
+                               ];
+            [array componentsJoinedByString:@"="];
+        });
+        [array addObject:kv];
+    }
+    return [array componentsJoinedByString:@"&"];
+}
+
 #pragma mark -
 
-- (void)play
-{
-    NSArray *commands = [self parsePlayerCommand];
-    NSTask *task = [NSTask launchedTaskWithLaunchPath:commands[0] arguments:[commands objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, commands.count - 1)]]];
-    // [task waitUntilExit];
-    
-    NSUserNotification *notification = [[NSUserNotification alloc] init];
-    notification.title = @"Now Playing...";
-    notification.informativeText = [NSString stringWithFormat:@"%@ %@", self.name, self.detail];
-    notification.soundName = nil;
-    
-    [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
-    [self parsePlayerCommand];
-}
-
-- (NSArray *)parsePlayerCommand
-{
-    NSString *playerCommand = [YPSettings sharedSettings].playerCommand;
-    playerCommand = [playerCommand stringByReplacingOccurrencesOfString:@" " withString:@","];
-    
-    NSArray *strings = [playerCommand CSVComponents][0];
-    
-    NSMutableArray *commands = @[].mutableCopy;
-    for (NSString *string in strings) {
-        NSString *command;
-        if ([string isEqualToString:YPPlaceholderForPlaylistURL]) {
-            command = [self.plsURL absoluteString];
-        }
-        else if ([string isEqualToString:YPPlaceholderForStreamURL]) {
-            command = [self.streamURL absoluteString];
-        }
-        else if ([string isEqualToString:YPPlaceholderForStreamURLMMS]) {
-            command = [self.streamURLMMS absoluteString];
-        }
-        else if ([string isEqualToString:YPPlaceholderForStreamURLMMSH]) {
-            command = [self.streamURLMMSH absoluteString];
-        }
-        else {
-            command = string;
-        }
-        command = [command stringByReplacingOccurrencesOfString:@"," withString:@" "];
-        command = [command stringByReplacingOccurrencesOfString:@"\"" withString:@""];
-        
-        [commands addObject:command];
-    }
-    return commands;
-}
 
 - (void)openContactURLInBrowser
 {
     NSTask *task = [NSTask launchedTaskWithLaunchPath:@"/usr/bin/open" arguments:@[self.contactURLString]];
+    [task waitUntilExit];
+}
+
+- (void)openYellowPageURLInBrowser
+{
+    NSTask *task = [NSTask launchedTaskWithLaunchPath:@"/usr/bin/open" arguments:@[
+                                                                                   [self.yellowPageSiteURLForChannel absoluteString]
+                                                                                   ]];
     [task waitUntilExit];
 }
 
@@ -211,6 +205,141 @@
 - (YPFavorite *)favorite
 {
     return [YPFavorite MR_findFirstByAttribute:@"keyword" withValue:self.name];
+}
+
+#pragma mark - Player
+
+- (void)playInMPlayerX
+{
+    NSString *playerCommand = [NSString stringWithFormat:@"/Applications/MPlayerX.app/Contents/Resources/binaries/x86_64/mplayer -loop 0 -playlist %@", [self.plsURL absoluteString]];
+    NSArray *commands = [self commandArrayFromPlayerCommand:playerCommand];
+    [self executePlayerCommand:commands];
+}
+
+- (void)playInVLC
+{
+    [self startRecievingInMPlayerX];
+    
+    NSString *playerCommand = [NSString stringWithFormat:@"\"/Applications/VLC.app/Contents/MacOS/VLC\" %@", [self.streamURLMMSH absoluteString]];
+    NSArray *commands = [self commandArrayFromPlayerCommand:playerCommand];
+    [self executePlayerCommand:commands];
+}
+
+- (void)playInFlipPlayer
+{
+    NSString *playerCommand = [NSString stringWithFormat:@"/usr/bin/open -a \"/Applications/Flip Player.app\" %@", [self.plsURL absoluteString]];
+    NSArray *commands = [self commandArrayFromPlayerCommand:playerCommand];
+    [self executePlayerCommand:commands];
+}
+
+// open playlist but do nothing
+// opening playlist will trigger channel recieving
+- (void)startRecievingInVLC
+{
+    NSString *playerCommand = [NSString stringWithFormat:@"\"/Applications/VLC.app/Contents/MacOS/VLC\" %@ vlc://pause:0.1 vlc://quit --intf=rc --play-and-exit", [self.plsURL absoluteString]];
+    NSArray *commands = [self commandArrayFromPlayerCommand:playerCommand];
+    NSTask *task = [self executePlayerCommand:commands];
+    [task waitUntilExit];
+}
+
+- (void)startRecievingInMPlayerX
+{
+    NSString *playerCommand = [NSString stringWithFormat:@"/Applications/MPlayerX.app/Contents/Resources/binaries/x86_64/mplayer -slave %@", [self.plsURL absoluteString]];
+    NSArray *commands = [self commandArrayFromPlayerCommand:playerCommand];
+    NSTask *task = [self executePlayerCommand:commands];
+    [task waitUntilExit];
+}
+
+- (NSTask *)executePlayerCommand:(NSArray *)commands
+{
+    NSTask *task = [NSTask launchedTaskWithLaunchPath:commands[0] arguments:[commands objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, commands.count - 1)]]];
+    return task;
+}
+
+- (NSArray *)commandArrayFromPlayerCommand:(NSString *)playerCommand
+{
+    playerCommand = [playerCommand stringByReplacingOccurrencesOfString:@" " withString:@","];
+    
+    NSArray *strings = [playerCommand CSVComponents][0];
+    
+    NSMutableArray *commands = @[].mutableCopy;
+    for (NSString *string in strings) {
+        NSString *command = string;
+        command = [command stringByReplacingOccurrencesOfString:@"," withString:@" "];
+        command = [command stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+        [commands addObject:command];
+    }
+    return commands;
+}
+
+- (void)play
+{
+    NSArray *commands = [self parsePlayerCommand];
+    NSTask *task = [NSTask launchedTaskWithLaunchPath:commands[0] arguments:[commands objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, commands.count - 1)]]];
+    
+    NSUserNotification *notification = [[NSUserNotification alloc] init];
+    notification.title = @"Now Playing...";
+    notification.informativeText = [NSString stringWithFormat:@"%@ %@", self.name, self.detail];
+    notification.soundName = nil;
+    
+    [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+}
+
+- (NSArray *)parsePlayerCommand
+{
+    NSString *playerCommand = [YPSettings sharedSettings].playerCommand;
+    playerCommand = [playerCommand stringByReplacingOccurrencesOfString:@" " withString:@","];
+    
+    NSArray *strings = [playerCommand CSVComponents][0];
+    
+    NSMutableArray *commands = @[].mutableCopy;
+    for (NSString *string in strings) {
+        NSString *command;
+        if ([string isEqualToString:YPPlaceholderForPlaylistURL]) {
+            command = [self.plsURL absoluteString];
+        }
+        else if ([string isEqualToString:YPPlaceholderForStreamURL]) {
+            command = [self.streamURL absoluteString];
+        }
+        else if ([string isEqualToString:YPPlaceholderForStreamURLMMS]) {
+            command = [self.streamURLMMS absoluteString];
+        }
+        else if ([string isEqualToString:YPPlaceholderForStreamURLMMSH]) {
+            command = [self.streamURLMMSH absoluteString];
+        }
+        else {
+            command = string;
+        }
+        command = [command stringByReplacingOccurrencesOfString:@"," withString:@" "];
+        command = [command stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+        
+        [commands addObject:command];
+    }
+    return commands;
+}
+
+#pragma mark -
+
+- (void)recordInMPlayerX
+{
+    [self startRecievingInMPlayerX];
+    NSString *playerCommand = [NSString stringWithFormat:@"/Applications/MPlayerX.app/Contents/Resources/binaries/x86_64/mplayer -dumpstream -dumpfile stream_video_name.wmv %@", [self.streamURLMMSH absoluteString]];
+    NSArray *commands = [self commandArrayFromPlayerCommand:playerCommand];
+    [self executeRecordingCommand:commands];
+}
+
+- (void)recordInVLC
+{
+    [self startRecievingInMPlayerX];
+    NSString *playerCommand = [NSString stringWithFormat:@"/Applications/VLC.app/Contents/MacOS/VLC %@ --sout=file/wmv:peercast_stream.wmv", [self.streamURLMMSH absoluteString]];
+    NSArray *commands = [self commandArrayFromPlayerCommand:playerCommand];
+    [self executeRecordingCommand:commands];
+}
+
+- (STPrivilegedTask *)executeRecordingCommand:(NSArray *)commands
+{
+    STPrivilegedTask *task = [STPrivilegedTask launchedPrivilegedTaskWithLaunchPath:commands[0] arguments:[commands objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, commands.count - 1)]]];
+    return task;
 }
 
 @end

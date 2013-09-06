@@ -442,11 +442,85 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
     [channel toggleFavorite];
 }
 
+- (IBAction)onContextualMenuCopyStreamURLPressed:(id)sender
+{
+    NSUInteger row = [self.tableView clickedRow];
+    YPChannel *channel = self.arrangedChannels[row];
+    [[NSPasteboard generalPasteboard] clearContents];
+    [[NSPasteboard generalPasteboard] setString:[channel.streamURL absoluteString] forType:NSStringPboardType];
+}
+
+- (IBAction)onContextualMenuCopyContactURLPressed:(id)sender
+{
+    NSUInteger row = [self.tableView clickedRow];
+    YPChannel *channel = self.arrangedChannels[row];
+    [[NSPasteboard generalPasteboard] clearContents];
+    [[NSPasteboard generalPasteboard] setString:[channel.contactURL absoluteString] forType:NSStringPboardType];
+}
+
+- (IBAction)onContextualMenuOpenYellowPagePressed:(id)sender
+{
+    NSUInteger row = [self.tableView clickedRow];
+    YPChannel *channel = self.arrangedChannels[row];
+    [channel openYellowPageURLInBrowser];
+}
+
+- (IBAction)onContextualMenuCopyYellowPageURLPressed:(id)sender
+{
+    NSUInteger row = [self.tableView clickedRow];
+    YPChannel *channel = self.arrangedChannels[row];
+    [[NSPasteboard generalPasteboard] clearContents];
+    [[NSPasteboard generalPasteboard] setString:[channel.yellowPageURL absoluteString] forType:NSStringPboardType];
+}
+
+- (IBAction)onContextualMenuCopyPlaylistURLPressed:(id)sender
+{
+    NSUInteger row = [self.tableView clickedRow];
+    YPChannel *channel = self.arrangedChannels[row];
+    [[NSPasteboard generalPasteboard] clearContents];
+    [[NSPasteboard generalPasteboard] setString:[channel.plsURL absoluteString] forType:NSStringPboardType];
+}
+
+- (IBAction)onContextualMenuPlayInFlipPlayerPressed:(id)sender
+{
+    NSUInteger row = [self.tableView clickedRow];
+    YPChannel *channel = self.arrangedChannels[row];
+    [channel playInFlipPlayer];
+}
+
+- (IBAction)onContextualMenuPlayInVLCPressed:(id)sender
+{
+    NSUInteger row = [self.tableView clickedRow];
+    YPChannel *channel = self.arrangedChannels[row];
+    [channel playInVLC];
+}
+
+- (IBAction)onContextualMenuPlayInMPlayerXPressed:(id)sender
+{
+    NSUInteger row = [self.tableView clickedRow];
+    YPChannel *channel = self.arrangedChannels[row];
+    [channel playInMPlayerX];
+}
+
+- (IBAction)onContextualMenuRecordinMPlayerXPressed:(id)sender
+{
+    NSUInteger row = [self.tableView clickedRow];
+    YPChannel *channel = self.arrangedChannels[row];
+    [channel recordInMPlayerX];
+}
+
+- (IBAction)onContextualMenuRecordinVLCPressed:(id)sender
+{
+    NSUInteger row = [self.tableView clickedRow];
+    YPChannel *channel = self.arrangedChannels[row];
+    [channel recordInMPlayerX];
+}
+
 #pragma mark - NSMenuDelegate
 
 - (void)menuNeedsUpdate:(NSMenu *)menu
 {
-    NSMenuItem *menuItem = menu.itemArray[3];
+    NSMenuItem *menuItem = menu.itemArray[5];
     
     NSUInteger row = [self.tableView clickedRow];
     YPChannel *channel = self.arrangedChannels[row];

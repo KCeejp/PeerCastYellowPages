@@ -761,14 +761,14 @@
                                 <rect key="frame" x="71" y="0.0" width="279" height="459"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
-                                    <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="90" horizontalPageScroll="10" verticalLineScroll="90" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" scrollerKnobStyle="dark" translatesAutoresizingMaskIntoConstraints="NO" id="AgL-W7-TEA">
+                                    <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" scrollerKnobStyle="dark" translatesAutoresizingMaskIntoConstraints="NO" id="AgL-W7-TEA">
                                         <rect key="frame" x="0.0" y="0.0" width="279" height="459"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <clipView key="contentView" ambiguous="YES" misplaced="YES" copiesOnScroll="NO" id="90X-GX-sKB">
                                             <rect key="frame" x="0.0" y="0.0" width="279" height="459"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="88" rowSizeStyle="automatic" viewBased="YES" id="4sF-Z7-oq3">
+                                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="4sF-Z7-oq3">
                                                     <rect key="frame" x="0.0" y="0.0" width="282" height="459"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
@@ -1009,19 +1009,48 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Play in..." id="gYv-kn-AU1">
                         <items>
-                            <menuItem title="MPlayer" id="7Ok-1e-Qdn" userLabel="Menu Item - MPlayerX">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                            </menuItem>
                             <menuItem title="VLC" id="bhu-Bp-6rk">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="onContextualMenuPlayInVLCPressed:" target="494" id="Cq9-4D-7aJ"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="MPlayer X" id="7Ok-1e-Qdn">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="onContextualMenuPlayInMPlayerXPressed:" target="494" id="9sg-AA-MC3"/>
+                                </connections>
                             </menuItem>
                             <menuItem title="Flip Player" id="Dxz-8c-feH">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="onContextualMenuPlayInFlipPlayerPressed:" target="494" id="TUq-Qr-UCv"/>
+                                </connections>
                             </menuItem>
                         </items>
                     </menu>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="AHC-NQ-ngP"/>
+                <menuItem title="Record in..." id="CUr-Dd-VSw">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Record in..." id="xBJ-Wj-sEg">
+                        <items>
+                            <menuItem title="MPlayer X" id="DRJ-cV-Fpr">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="onContextualMenuRecordinMPlayerXPressed:" target="494" id="2bT-IB-3iC"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="VLC" id="kb8-G4-TIx">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="onContextualMenuRecordinVLCPressed:" target="494" id="FGr-da-adV"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="2cO-ff-vfs"/>
                 <menuItem title="Add to Favorite" id="7dx-Sn-x02">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
@@ -1033,6 +1062,37 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="onContextualMenuOpenContactURLPressed:" target="494" id="XjW-9d-KjS"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Open Yellow Page" id="ZGo-aP-4Pf">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="onContextualMenuOpenYellowPagePressed:" target="494" id="c3R-f3-OnL"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="Cz4-5c-gwh"/>
+                <menuItem title="Copy Stream URL" id="nhG-zk-kLw">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="onContextualMenuCopyStreamURLPressed:" target="494" id="NDN-7c-cru"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Copy Playlist URL" id="bsR-Uv-jtN">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="onContextualMenuCopyPlaylistURLPressed:" target="494" id="lMS-iw-TWk"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Copy Contact URL" id="yn6-zq-tlg">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="onContextualMenuCopyContactURLPressed:" target="494" id="v05-Dz-xch"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Copy Yellow Page URL" id="khl-bN-bHX">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="onContextualMenuCopyYellowPageURLPressed:" target="494" id="WDe-pV-KJa"/>
                     </connections>
                 </menuItem>
             </items>

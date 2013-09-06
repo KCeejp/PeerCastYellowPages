@@ -66,3 +66,9 @@
 #define COCOAPODS_VERSION_MINOR_RFOverlayScrollView 1
 #define COCOAPODS_VERSION_PATCH_RFOverlayScrollView 0
 
+// STPrivilegedTask
+#define COCOAPODS_POD_AVAILABLE_STPrivilegedTask
+#define COCOAPODS_VERSION_MAJOR_STPrivilegedTask 0
+#define COCOAPODS_VERSION_MINOR_STPrivilegedTask 0
+#define COCOAPODS_VERSION_PATCH_STPrivilegedTask 1
+

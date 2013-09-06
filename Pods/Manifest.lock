@@ -10,6 +10,7 @@ PODS:
   - NSImage-HHTint (0.0.1)
   - OBMenuBarWindow (1.0.0)
   - RFOverlayScrollView (0.1)
+  - STPrivilegedTask (0.0.1)
 
 DEPENDENCIES:
   - AFNetworking (= 1.3.2)
@@ -22,10 +23,13 @@ DEPENDENCIES:
   - NSImage-HHTint (from `https://gist.github.com/KCeejp/0b9dfa8f61152e138d8c/raw/85461164d39ace2d6c86cc4f0766f898c90d85fe/NSImage-HHTint.podspec`)
   - OBMenuBarWindow (~> 1.0.0)
   - RFOverlayScrollView
+  - STPrivilegedTask (from `https://gist.github.com/KCeejp/1811b971d82500cc223b/raw/fe4ccd3f5b6e7bd23db9d92d74214bae0ca3223b/STPrivilegedTask.podspec`)
 
 EXTERNAL SOURCES:
   NSImage-HHTint:
     :podspec: https://gist.github.com/KCeejp/0b9dfa8f61152e138d8c/raw/85461164d39ace2d6c86cc4f0766f898c90d85fe/NSImage-HHTint.podspec
+  STPrivilegedTask:
+    :podspec: https://gist.github.com/KCeejp/1811b971d82500cc223b/raw/fe4ccd3f5b6e7bd23db9d92d74214bae0ca3223b/STPrivilegedTask.podspec
 
 SPEC CHECKSUMS:
   AFNetworking: 7f9bcd7c287a75476cd5c61e82fd3380e93e4c54
@@ -38,5 +42,6 @@ SPEC CHECKSUMS:
   NSImage-HHTint: d825780d0692a7b29b322d88402f56701d6828d2
   OBMenuBarWindow: ca509046488b1ab5967d4e3b1df88250a423631c
   RFOverlayScrollView: c24fab831435320ebb17ead76ffd6e8b9e42704e
+  STPrivilegedTask: 59d74b16bb595caa5d94e3961a41b3e3987136f7
 
 COCOAPODS: 0.23.0

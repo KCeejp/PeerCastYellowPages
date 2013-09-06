@@ -1,4 +1,4 @@
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/AFNetworking" "${PODS_ROOT}/Headers/BlocksKit" "${PODS_ROOT}/Headers/CHCSVParser" "${PODS_ROOT}/Headers/CocoaLumberjack" "${PODS_ROOT}/Headers/INAppStoreWindow" "${PODS_ROOT}/Headers/MASPreferences" "${PODS_ROOT}/Headers/MagicalRecord" "${PODS_ROOT}/Headers/NSImage-HHTint" "${PODS_ROOT}/Headers/OBMenuBarWindow" "${PODS_ROOT}/Headers/RFOverlayScrollView"
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/AFNetworking" "${PODS_ROOT}/Headers/BlocksKit" "${PODS_ROOT}/Headers/CHCSVParser" "${PODS_ROOT}/Headers/CocoaLumberjack" "${PODS_ROOT}/Headers/INAppStoreWindow" "${PODS_ROOT}/Headers/MASPreferences" "${PODS_ROOT}/Headers/MagicalRecord" "${PODS_ROOT}/Headers/NSImage-HHTint" "${PODS_ROOT}/Headers/OBMenuBarWindow" "${PODS_ROOT}/Headers/RFOverlayScrollView" "${PODS_ROOT}/Headers/STPrivilegedTask"
 OTHER_LDFLAGS = -ObjC -lffi -framework CoreData -framework CoreServices -framework Security -framework SystemConfiguration
 PODS_ROOT = ${SRCROOT}/Pods
