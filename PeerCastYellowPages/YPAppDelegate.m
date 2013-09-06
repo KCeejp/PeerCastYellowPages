@@ -254,6 +254,7 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
                 [self.scopeBar setSelected:NO forItem:identifier inGroup:i];
             }
         }
+        [self.tableView scrollRowToVisible:0];
         
         [self.scopeBar setSelected:YES forItem:YPScopeBarAllIdentifier inGroup:0];
         
