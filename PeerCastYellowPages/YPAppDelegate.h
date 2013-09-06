@@ -29,4 +29,7 @@
 @property (weak) IBOutlet NSView *rightPaneView;
 @property (weak) IBOutlet MGScopeBar *scopeBar;
 
+@property (weak) IBOutlet NSMenuItem *stopRecordingMenuItem;
+@property (weak) IBOutlet NSMenuItem *recordingMenuItem;
+
 @end

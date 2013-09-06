@@ -22,11 +22,17 @@
 - (void)openYellowPageURLInBrowser;
 - (void)notifyNewChannel;
 
+@property (nonatomic) NSTask *recordingTask;
+@property (nonatomic, getter=isRecording, readonly) BOOL recording;
+- (void)stopRecording;
+
 @property (nonatomic) NSURL *contactURL;
 @property (nonatomic) NSURL *yellowPageURL;
 @property (nonatomic, copy, readonly) NSString *yellowPageName;
+@property (nonatomic, copy) NSString *temporaryFilename;
 
 @property (nonatomic, readonly) YPFavorite *favorite;
+
 - (void)toggleFavorite;
 
 @end

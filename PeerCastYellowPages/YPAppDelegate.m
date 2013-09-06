@@ -542,19 +542,35 @@ typedef NS_ENUM(NSUInteger, YPTableViewType) {
     [channel recordInMPlayerX];
 }
 
+- (IBAction)onContextualMenuStopRecordingPressed:(id)sender
+{
+    NSUInteger row = [self.tableView clickedRow];
+    YPChannel *channel = self.arrangedChannels[row];
+    [channel stopRecording];
+}
+
 #pragma mark - NSMenuDelegate
 
 - (void)menuNeedsUpdate:(NSMenu *)menu
 {
-    NSMenuItem *menuItem = menu.itemArray[5];
+    NSMenuItem *favoriteMenuItem = menu.itemArray[5];
     
     NSUInteger row = [self.tableView clickedRow];
     YPChannel *channel = self.arrangedChannels[row];
     if (channel.favorite) {
-        menuItem.title = @"Remove from Favorite";
+        favoriteMenuItem.title = @"Remove from Favorite";
     }
     else {
-        menuItem.title = @"Add to Favorite";
+        favoriteMenuItem.title = @"Add to Favorite";
+    }
+    
+    if (channel.isRecording) {
+        [menu removeItemAtIndex:3];
+        [menu insertItem:self.stopRecordingMenuItem atIndex:3];
+    }
+    else {
+        [menu removeItemAtIndex:3];
+        [menu insertItem:self.recordingMenuItem atIndex:3];
     }
 }
 

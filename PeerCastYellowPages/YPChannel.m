@@ -1,6 +1,6 @@
 #import "CHCSVParser.h"
 #import "YPCache.h"
-#import "STPrivilegedTask.h"
+#import "YPRecordingManager.h"
 
 @interface YPChannel ()
 
@@ -9,6 +9,10 @@
 @end
 
 @implementation YPChannel
+
+@synthesize recording = _recording;
+@synthesize recordingTask = _recordingTask;
+@synthesize temporaryFilename = _temporaryFilename;
 
 // Custom logic goes here.
 
@@ -264,7 +268,7 @@
 - (void)play
 {
     NSArray *commands = [self parsePlayerCommand];
-    NSTask *task = [NSTask launchedTaskWithLaunchPath:commands[0] arguments:[commands objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, commands.count - 1)]]];
+    [NSTask launchedTaskWithLaunchPath:commands[0] arguments:[commands objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, commands.count - 1)]]];
     
     NSUserNotification *notification = [[NSUserNotification alloc] init];
     notification.title = @"Now Playing...";
@@ -307,28 +311,91 @@
     return commands;
 }
 
-#pragma mark -
+#pragma mark - Recording
 
 - (void)recordInMPlayerX
 {
-    [self startRecievingInMPlayerX];
-    NSString *playerCommand = [NSString stringWithFormat:@"/Applications/MPlayerX.app/Contents/Resources/binaries/x86_64/mplayer -dumpstream -dumpfile stream_video_name.wmv %@", [self.streamURLMMSH absoluteString]];
-    NSArray *commands = [self commandArrayFromPlayerCommand:playerCommand];
-    [self executeRecordingCommand:commands];
+    self.temporaryFilename = [self generateFilename];
+    NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock: ^{
+        [self startRecievingInMPlayerX];
+        NSString *playerCommand = [NSString stringWithFormat:@"/Applications/MPlayerX.app/Contents/Resources/binaries/x86_64/mplayer -slave -dumpstream -dumpfile %@ %@",
+                                   [self temporaryFilename],
+                                   [self.streamURLMMSH absoluteString]
+                                   ];
+        NSArray *commands = [self commandArrayFromPlayerCommand:playerCommand];
+        self.recordingTask = [self executePlayerCommand:commands];
+        [self.recordingTask waitUntilExit];
+    }];
+    [operation setCompletionBlock:^{
+        [self stopRecording];
+        
+    }];
+    [[YPRecordingManager sharedManager] enqueueRecordingOperation:operation];
 }
 
 - (void)recordInVLC
 {
-    [self startRecievingInMPlayerX];
-    NSString *playerCommand = [NSString stringWithFormat:@"/Applications/VLC.app/Contents/MacOS/VLC %@ --sout=file/wmv:peercast_stream.wmv", [self.streamURLMMSH absoluteString]];
-    NSArray *commands = [self commandArrayFromPlayerCommand:playerCommand];
-    [self executeRecordingCommand:commands];
+    self.temporaryFilename = [self generateFilename];
+    NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock: ^{
+        [self startRecievingInMPlayerX];
+        NSString *playerCommand = [NSString stringWithFormat:@"/Applications/VLC.app/Contents/MacOS/VLC %@ --sout=file/wmv:%@",
+                                   [self.streamURLMMSH absoluteString],
+                                   [self temporaryFilename]
+                                   ];
+        NSArray *commands = [self commandArrayFromPlayerCommand:playerCommand];
+        self.recordingTask = [self executePlayerCommand:commands];
+        [self.recordingTask waitUntilExit];
+    }];
+    [operation setCompletionBlock:^{
+        [self stopRecording];
+    }];
+    [[YPRecordingManager sharedManager] enqueueRecordingOperation:operation];
 }
 
-- (STPrivilegedTask *)executeRecordingCommand:(NSArray *)commands
+- (BOOL)isRecording
 {
-    STPrivilegedTask *task = [STPrivilegedTask launchedPrivilegedTaskWithLaunchPath:commands[0] arguments:[commands objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, commands.count - 1)]]];
-    return task;
+    return (self.recordingTask) ? YES : NO;
+}
+
+- (void)stopRecording
+{
+    if (!self.isRecording) return;
+    
+    [self.recordingTask terminate];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error;
+    
+    if ([fileManager fileExistsAtPath:[self defaultSavingPath]]) {
+        
+        NSURL *fromURL = [NSURL fileURLWithPath:[self defaultSavingPath]];
+        NSURL *toURL  = [[[fileManager URLsForDirectory:NSMoviesDirectory inDomains:NSUserDomainMask] lastObject] URLByAppendingPathComponent:[self filename]];
+        [fileManager moveItemAtURL:fromURL toURL:toURL error:&error];
+        self.temporaryFilename = nil;
+        self.recordingTask = nil;
+    }
+}
+
+- (NSString *)generateFilename
+{
+    NSDate *date = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] initWithDateFormat:@"%Y_%m_%d_%H_%M_%S" allowNaturalLanguage:YES];
+    NSString *dateString = [dateFormatter stringFromDate:date];
+    return [NSString stringWithFormat:@"%@.wmv", dateString];
+}
+
+- (NSString *)defaultSavingPath
+{
+    NSString *currentpath = [[[[NSBundle mainBundle] bundlePath] stringByDeletingPathExtension] stringByDeletingLastPathComponent];
+    NSURL *currentURL = [NSURL URLWithString:currentpath];
+    return [[currentURL URLByAppendingPathComponent:[self temporaryFilename]] absoluteString];
+}
+
+- (NSString *)filename
+{
+    NSDate *date = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] initWithDateFormat:@"%Y_%m_%d_%H_%M_%S" allowNaturalLanguage:YES];
+    NSString *dateString = [dateFormatter stringFromDate:date];
+    return [NSString stringWithFormat:@"%@_%@.wmv", self.name, dateString];
 }
 
 @end

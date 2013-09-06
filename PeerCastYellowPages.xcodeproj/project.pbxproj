@@ -21,6 +21,7 @@
 		D605590717B93D8F0070C4AD /* PeerCastYellowPagesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D605590617B93D8F0070C4AD /* PeerCastYellowPagesTests.m */; };
 		D605591217B94F6C0070C4AD /* YPIndexDotTxtRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = D605591117B94F6C0070C4AD /* YPIndexDotTxtRequestOperation.m */; };
 		D605591517B94FB30070C4AD /* YPYellowPagesClient.m in Sources */ = {isa = PBXBuildFile; fileRef = D605591417B94FB30070C4AD /* YPYellowPagesClient.m */; };
+		D636DA4917DA4BE9005BAE10 /* YPRecordingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D636DA4817DA4BE9005BAE10 /* YPRecordingManager.m */; };
 		D64031CF17C008B500BD25C3 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64031CE17C008B500BD25C3 /* WebKit.framework */; };
 		D640321F17C0298100BD25C3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64031CC17BF280D00BD25C3 /* SystemConfiguration.framework */; };
 		D6720EAA17BA956700BC2677 /* YPChannelCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = D6720EA917BA956700BC2677 /* YPChannelCellView.m */; };
@@ -79,6 +80,8 @@
 		D605591117B94F6C0070C4AD /* YPIndexDotTxtRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPIndexDotTxtRequestOperation.m; sourceTree = "<group>"; };
 		D605591317B94FB30070C4AD /* YPYellowPagesClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPYellowPagesClient.h; sourceTree = "<group>"; };
 		D605591417B94FB30070C4AD /* YPYellowPagesClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPYellowPagesClient.m; sourceTree = "<group>"; };
+		D636DA4717DA4BE9005BAE10 /* YPRecordingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPRecordingManager.h; sourceTree = "<group>"; };
+		D636DA4817DA4BE9005BAE10 /* YPRecordingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPRecordingManager.m; sourceTree = "<group>"; };
 		D64031CC17BF280D00BD25C3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D64031CE17C008B500BD25C3 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		D6720EA817BA956700BC2677 /* YPChannelCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPChannelCellView.h; sourceTree = "<group>"; };
@@ -236,6 +239,8 @@
 				D6720EF517BEE30E00BC2677 /* YPConfigurations.h */,
 				D6720ED217BCC92000BC2677 /* YPChannelUpdator.h */,
 				D6720ED317BCC92000BC2677 /* YPChannelUpdator.m */,
+				D636DA4717DA4BE9005BAE10 /* YPRecordingManager.h */,
+				D636DA4817DA4BE9005BAE10 /* YPRecordingManager.m */,
 				D6720ECD17BBE03000BC2677 /* CoreDataModels */,
 				D605591017B94F6C0070C4AD /* YPIndexDotTxtRequestOperation.h */,
 				D605591117B94F6C0070C4AD /* YPIndexDotTxtRequestOperation.m */,
@@ -445,6 +450,7 @@
 				D6720EC917BBE02500BC2677 /* _YPYellowPage.m in Sources */,
 				D6720EC717BBE02500BC2677 /* _YPChannel.m in Sources */,
 				D6720ECB17BBE02500BC2677 /* YPFavorite.m in Sources */,
+				D636DA4917DA4BE9005BAE10 /* YPRecordingManager.m in Sources */,
 				D6720EE817BCEB6500BC2677 /* YPYellowPagesPreferencesViewController.m in Sources */,
 				D6720ED117BBE58A00BC2677 /* YPChannel.m in Sources */,
 				D6720ECC17BBE02500BC2677 /* YPYellowPage.m in Sources */,
@@ -596,6 +602,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PeerCastYellowPages/PeerCastYellowPages-Prefix.pch";
 				INFOPLIST_FILE = "PeerCastYellowPages/PeerCastYellowPages-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -610,6 +617,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PeerCastYellowPages/PeerCastYellowPages-Prefix.pch";
 				INFOPLIST_FILE = "PeerCastYellowPages/PeerCastYellowPages-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

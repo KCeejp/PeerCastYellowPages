@@ -11,7 +11,6 @@
 @interface YPChannelCellView ()
 
 @property (nonatomic) NSTrackingRectTag trackingRect;
-@property (nonatomic) BOOL wasAcceptingMouseEvents;
 
 @end
 
@@ -62,17 +61,12 @@
 {
     [super mouseEntered:theEvent];
     
-    self.wasAcceptingMouseEvents = [self.window acceptsMouseMovedEvents];
-    [self.window setAcceptsMouseMovedEvents:YES];
-    
-    [self.window makeFirstResponder:self];
     self.playButton.alphaValue = 1.f;
 }
 
 - (void)mouseExited:(NSEvent *)theEvent
 {
     [super mouseExited:theEvent];
-    [self.window setAcceptsMouseMovedEvents:self.wasAcceptingMouseEvents];
     
     self.playButton.alphaValue = 0.f;
 }
