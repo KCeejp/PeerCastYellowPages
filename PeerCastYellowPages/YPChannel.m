@@ -1,4 +1,3 @@
-#import "GTMNSString+HTML.h"
 #import "CHCSVParser.h"
 #import "YPCache.h"
 #import "STPrivilegedTask.h"
@@ -36,16 +35,6 @@
 - (NSURL *)streamURLMMSH
 {
     return [NSURL URLWithString:[NSString stringWithFormat:@"mmsh://%@:%lu/stream/%@.%@", [YPSettings sharedSettings].peerCastHost, (unsigned long)[YPSettings sharedSettings].peerCastPort, self.identifier, [self.format lowercaseString]]];
-}
-
-- (NSString *)name
-{
-    return [self.primitiveName gtm_stringByUnescapingFromHTML];
-}
-
-- (NSString *)detail
-{
-    return [self.primitiveDetail gtm_stringByUnescapingFromHTML];
 }
 
 #pragma mark -

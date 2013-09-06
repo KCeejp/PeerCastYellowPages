@@ -8,6 +8,8 @@
 
 #import "YPIndexDotTxtRequestOperation.h"
 
+#import "GTMNSString+HTML.h"
+
 @implementation YPIndexDotTxtRequestOperation
 
 #pragma mark - AFHTTPRequestOperation
@@ -44,7 +46,7 @@
         }
         
         channel.yellowPageURLString = [self.request.URL absoluteString];
-        channel.name = elements[0];
+        channel.name = [elements[0] gtm_stringByUnescapingFromHTML];
         channel.identifier = elements[1];
         
         NSString *host = elements[2];
@@ -54,14 +56,14 @@
         }
         
         channel.contactURLString = elements[3];
-        channel.genre = elements[4];
-        channel.detail = elements[5];
+        channel.genre = [elements[4] gtm_stringByUnescapingFromHTML];
+        channel.detail = [elements[5] gtm_stringByUnescapingFromHTML];
         channel.viewerCount = [NSNumber numberWithInteger:[elements[6] integerValue]];
         channel.relayCount = [NSNumber numberWithInteger:[elements[7] integerValue]];
         channel.bitrate = [NSNumber numberWithInteger:[elements[8] integerValue]];
         channel.format = elements[9];
         channel.status = elements[17];
-        channel.comment = elements[18];
+        channel.comment = [elements[18] gtm_stringByUnescapingFromHTML];
         
         [channel notifyNewChannel];
         
